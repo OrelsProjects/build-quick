@@ -64,47 +64,51 @@ export default function Component() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Template Gallery</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {templates.map((template, index) => (
-          <motion.div
-            key={template.name}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
-              <CardContent className="p-0">
-                <div className="aspect-square relative">
-                  <div className="absolute inset-0 overflow-hidden">
-                    <div
-                      className={`w-full h-full md:hover:cursor-pointer transition-transform duration-300 ${
-                        hoveredIndex === index ? "scale-105" : "scale-100"
-                      }`}
-                      onClick={() => {
-                        // navigate same tab
-                        router.push(`/template/${template.router}`);
-                      }}
-                    >
-                      <Image
-                        src={template.image}
-                        alt={template.name}
-                        layout="fill"
-                        className="transition-transform duration-300 hover:scale-105 object-cover"
-                      />
+    <div className="w-full h-full bg-gradient-to-b from-violet-100/30 to-indigo-100/30">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-center mb-8">
+          Choose your template
+        </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {templates.map((template, index) => (
+            <motion.div
+              key={template.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <CardContent className="p-0">
+                  <div className="aspect-square relative">
+                    <div className="absolute inset-0 overflow-hidden">
+                      <div
+                        className={`w-full h-full md:hover:cursor-pointer transition-transform duration-300 ${
+                          hoveredIndex === index ? "scale-105" : "scale-100"
+                        }`}
+                        onClick={() => {
+                          // navigate same tab
+                          router.push(`/template/${template.router}`);
+                        }}
+                      >
+                        <Image
+                          src={template.image}
+                          alt={template.name}
+                          layout="fill"
+                          className="transition-transform duration-300 hover:scale-105 object-cover"
+                        />
+                      </div>
+                    </div>
+                    <div className="p-4 bg-background/80 backdrop-blur-sm absolute bottom-0 left-0 right-0">
+                      <h2 className="font-semibold text-lg">{template.name}</h2>
                     </div>
                   </div>
-                  <div className="p-4 bg-background/80 backdrop-blur-sm absolute bottom-0 left-0 right-0">
-                    <h2 className="font-semibold text-lg">{template.name}</h2>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
