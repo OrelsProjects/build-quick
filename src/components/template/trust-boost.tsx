@@ -109,8 +109,7 @@ export default function TrustBoost() {
                 src="/placeholder.svg?height=400&width=400"
                 alt="Widget customization interface"
                 layout="fill"
-                objectFit="cover"
-                className="rounded-lg shadow-xl"
+                className="rounded-lg shadow-xl object-cover"
               />
             </motion.div>
           </div>

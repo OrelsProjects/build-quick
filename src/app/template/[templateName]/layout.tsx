@@ -2,6 +2,7 @@
 // components/Layout.js
 import { useEffect } from "react";
 import Head from "next/head";
+import NavigationBar from "./navigationBar";
 
 const Layout = ({
   children,
@@ -42,9 +43,16 @@ const Layout = ({
         <meta property="og:title" content={document.title} />
         <meta property="og:image" content={ogImageUrl} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={typeof window !== "undefined" ? window.location.href : ""} />
+        <meta
+          property="og:url"
+          content={typeof window !== "undefined" ? window.location.href : ""}
+        />
       </Head>
-      <div>{children}</div>
+
+      <div className="relative">
+        <NavigationBar />
+        {children}
+      </div>
     </>
   );
 };
