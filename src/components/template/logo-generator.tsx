@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Palette, Type, Download, Share2 } from "lucide-react";
+import { ArrowRight, Palette, Type, Download } from "lucide-react";
 
 export default function LogoGenerator() {
   const [brandDescription, setBrandDescription] = useState("");

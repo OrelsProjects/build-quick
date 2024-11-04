@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React, { FC } from "react";
 
 // Import all components
@@ -30,7 +29,6 @@ const componentMap: Record<string, FC> = {
 };
 
 const TemplateRenderer = ({ params }: { params: { templateName: string } }) => {
-  const router = useRouter();
   const { templateName } = params;
   if (!templateName || typeof templateName !== "string") {
     return <div>Loading...</div>;

@@ -1,10 +1,9 @@
 "use client"
 
-import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowRight, BarChart2, Clock, Users, Zap } from "lucide-react"
+import { BarChart2, Clock, Users, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
@@ -17,7 +16,7 @@ const fadeIn = {
 }
 
 export default function ProductivityPro() {
-  const [email, setEmail] = useState("")
+//   const [email, setEmail] = useState("")
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
@@ -188,7 +187,7 @@ export default function ProductivityPro() {
                   <CardTitle>Game-Changer for Our Agency</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="italic">"ProductivityPro has revolutionized how we track time and manage projects. Our team's productivity has soared!"</p>
+                  <p className="italic">&quot;ProductivityPro has revolutionized how we track time and manage projects. Our team&apos;s productivity has soared!&quot;</p>
                   <p className="mt-2 font-semibold">- Sarah J., Creative Director</p>
                 </CardContent>
               </Card>
@@ -197,7 +196,7 @@ export default function ProductivityPro() {
                   <CardTitle>Invaluable Insights</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="italic">"The productivity insights have helped us optimize our workflows and improve our bottom line. Highly recommended!"</p>
+                  <p className="italic">&quot;The productivity insights have helped us optimize our workflows and improve our bottom line. Highly recommended!&quot;</p>
                   <p className="mt-2 font-semibold">- Michael T., Small Business Owner</p>
                 </CardContent>
               </Card>
@@ -284,7 +283,7 @@ export default function ProductivityPro() {
                     <DialogHeader>
                       <DialogTitle>Schedule a Demo</DialogTitle>
                       <DialogDescription>
-                        Fill out the form below and we'll be in touch to schedule your personalized demo.
+                        Fill out the form below and we&apos;ll be in touch to schedule your personalized demo.
                       </DialogDescription>
                     </DialogHeader>
                     <form className="space-y-4">

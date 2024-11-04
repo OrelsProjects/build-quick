@@ -356,7 +356,7 @@ export default function IdeasGenerator() {
                 </p>
               </div>
               <div className="container grid gap-8 sm:grid-cols-2 md:grid-cols-3 px-28">
-                {["Basic", "Pro", "Enterprise"].map((plan, index) => (
+                {["Basic", "Pro", "Enterprise"].map((plan) => (
                   <motion.div
                     key={plan}
                     variants={cardVariants}

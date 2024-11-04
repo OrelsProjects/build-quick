@@ -129,7 +129,7 @@ export default function TrustBoost() {
             <motion.div key={index} {...fadeInUp} transition={{ delay: index * 0.2 }}>
               <Card className="bg-indigo-800 border-green-400">
                 <CardContent className="p-6 text-gray-300">
-                  <p className="mb-4">"{testimonial.content}"</p>
+                  <p className="mb-4">&quot;{testimonial.content}&quot;</p>
                   <div className="font-semibold text-white">{testimonial.name}</div>
                   <div className="text-green-400">{testimonial.company}</div>
                 </CardContent>

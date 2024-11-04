@@ -186,7 +186,7 @@ export default function PolicyCraft() {
                 },
               ].map((testimonial, index) => (
                 <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-                  <p className="italic mb-4">"{testimonial.quote}"</p>
+                  <p className="italic mb-4">&quot;{testimonial.quote}&quot;</p>
                   <p className="font-bold">{testimonial.name}</p>
                   <p className="text-gray-600">{testimonial.company}</p>
                 </div>

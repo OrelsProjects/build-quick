@@ -4,7 +4,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 const templates = [
   {
@@ -61,7 +60,6 @@ const templates = [
 
 export default function Component() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const router = useRouter();
 
   return (
     <div className="container mx-auto px-4 py-8">
