@@ -45,5 +45,6 @@ I want you to return this object (ONLY): {
   5. Don't change the base design, including colors, fonts etc. Only texts wherever needed.
   6. You can change icons imported from lucide-react, but make sure to include the import statement and remove what's not needed.
   7. Make sure that if you choose any new icons, that they are available in the lucide-react library. Search internet if needed.
+  8. Escape all special characters. For example, " should be &quot; and ' should be &apos;, etc.
   `;
 }

@@ -220,7 +220,7 @@ export function PlaceholdersAndVanishInput({
             if (maxLetters !== undefined) {
               newValue = newValue.slice(0, maxLetters);
             }
-
+            e.target.value = newValue;
             onChange?.(e);
           }
         }}

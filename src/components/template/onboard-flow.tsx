@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MousePointer, List, MessageCircle } from "lucide-react";
+import Image from "next/image";
 
 export default function OnboardFlow() {
   const [activeFeature, setActiveFeature] = useState(0);
@@ -194,10 +195,11 @@ export default function OnboardFlow() {
           transition={{ duration: 0.5 }}
         >
           <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-center">
-            <img
+            <Image
               src="https://randomuser.me/api/portraits/women/44.jpg"
               alt="Client"
-              className="w-24 h-24 rounded-full mx-auto mb-6"
+              fill
+              className="!relative !w-24 !h-24 rounded-full mx-auto mb-6"
             />
             <blockquote className="text-xl text-gray-600 mb-6">
             &quot;OnboardFlow transformed our user experience. We saw a 40%

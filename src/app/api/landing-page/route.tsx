@@ -27,9 +27,9 @@ export async function POST(req: NextRequest) {
         { error: "Failed to generate landing page" },
         { status: 500 }
       );
-    }   
+    }
 
-    const componentStringifiedParsed = componentStringified
+    const componentParsed = componentStringified
       .replace(/\\n/g, "\n")
       .replace(/\\"/g, '"');
 
@@ -42,11 +42,19 @@ export async function POST(req: NextRequest) {
     // check if templateName exists. if so, delete it
     if (
       fs.existsSync(
-        path.join(process.cwd(), "src/components/generated", `${templateName}.tsx`)
+        path.join(
+          process.cwd(),
+          "src/components/generated",
+          `${templateName}.tsx`
+        )
       )
     ) {
       fs.unlinkSync(
-        path.join(process.cwd(), "src/components/generated", `${templateName}.tsx`)
+        path.join(
+          process.cwd(),
+          "src/components/generated",
+          `${templateName}.tsx`
+        )
       );
     }
 
@@ -56,11 +64,11 @@ export async function POST(req: NextRequest) {
         "src/components/generated",
         `${templateName}.tsx`
       ),
-      componentStringifiedParsed
+      componentParsed
     );
 
     return NextResponse.json({ landingPage }, { status: 200 });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 500 }
