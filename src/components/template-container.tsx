@@ -57,7 +57,7 @@ export default function TemplateContainer({
               <Image
                 src={templateObject.image}
                 alt={templateObject.name}
-                layout="fill"
+                fill
                 className="transition-transform duration-300 hover:scale-105 object-cover"
               />
             </Link>

@@ -3,6 +3,7 @@ import "./globals.css";
 import * as toast from "react-toastify";
 import TopLoaderProvider from "../providers/TopLoaderProvider";
 import AnimationProvider from "../providers/AnimationProvider";
+import { Suspense } from "react";
 
 const OG_IMAGE_URL = process.env.NEXT_PUBLIC_OG_IMAGE_URL;
 const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME;
@@ -59,21 +60,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="relative z-[51]">
-          <toast.ToastContainer
-            stacked
-            newestOnTop
-            theme={"light"}
-            autoClose={2500}
-            draggablePercent={60}
-            className="!mb-16 z-[51]"
-            transition={toast.Flip}
-            position="bottom-center"
-            pauseOnHover={false}
-          />
-          <TopLoaderProvider />
-        </div>
-        <AnimationProvider>{children}</AnimationProvider>
+        <Suspense>
+          <div className="relative z-[51]">
+            <toast.ToastContainer
+              stacked
+              newestOnTop
+              theme={"light"}
+              autoClose={2500}
+              draggablePercent={60}
+              className="!mb-16 z-[51]"
+              transition={toast.Flip}
+              position="bottom-center"
+              pauseOnHover={false}
+            />
+            <TopLoaderProvider />
+          </div>
+          <AnimationProvider>{children}</AnimationProvider>
+        </Suspense>
       </body>
     </html>
   );
