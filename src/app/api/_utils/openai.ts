@@ -54,6 +54,7 @@ export async function generateLandingPage(
   //   if (!stylingGuide) {
   //     throw new Error("Failed to generate styling guide");
   //   }
+  const now = new Date();
   const prompt = buildLandingPagePrompt(templateCode, product);
   console.log(prompt);
   const landingPageResponse = await openai.chat.completions.create({
@@ -83,6 +84,9 @@ export async function generateLandingPage(
     });
     landingPage = parseResponse<LandingPage>(landingPageResponse);
   }
+
+  const timeToRun = new Date().getTime() - now.getTime();
+  console.log("Time to run", timeToRun);
 
   return landingPage;
 }

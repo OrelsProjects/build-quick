@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateLandingPage } from "../_utils/openai";
-import Product from "../../../lib/models/product";
+import Product from "@/lib/models/product";
 import fs from "fs";
 import path from "path";
+
+export const maxDuration = 60; // 5 minutes
+
 // TODO: Make sure the user has enough permissions to access this route. maybe via ip verification or something
 export async function POST(req: NextRequest) {
   try {

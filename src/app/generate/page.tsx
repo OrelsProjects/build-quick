@@ -2,6 +2,8 @@
 "use client";
 
 import { useState, useEffect, useRef, useMemo } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import ReactDOMServer from "react-dom/server";
 import { useFormik } from "formik";
 import { motion, AnimatePresence } from "framer-motion";
@@ -34,15 +36,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import TemplateContainer from "../../components/template-container";
-import { PlaceholdersAndVanishInput } from "../../components/ui/palceholder-and-vanish-input";
-import { productDescriptions, templateNameToComponent } from "../../lib/consts";
-import Link from "next/link";
-import { useCustomRouter } from "../../lib/hooks/useCustomRouter";
-import Product from "../../lib/models/product";
-import { TemplateId } from "../../lib/models/template";
+import TemplateContainer from "@/components/template-container";
+import { PlaceholdersAndVanishInput } from "@/components/ui/palceholder-and-vanish-input";
+import { productDescriptions } from "@/lib/consts";
+import { useCustomRouter } from "@/lib/hooks/useCustomRouter";
+import Product from "@/lib/models/product";
+import { TemplateId } from "@/lib/models/template";
 import axios from "axios";
 
 const saveIdea = (idea: Partial<Idea>): string => {
@@ -76,30 +76,6 @@ const getIdea = (): Idea => {
   }
   return JSON.parse(ideaString);
 };
-
-const getPrompt = (ideaId?: string): string | null => {
-  if (!ideaId) {
-    return null;
-  }
-  const promptString = localStorage.getItem("prompt");
-  if (!promptString) {
-    return null;
-  }
-  const prompt = JSON.parse(promptString) as Prompt;
-  if (prompt.ideaId === ideaId) {
-    return prompt.prompt;
-  }
-  return null;
-};
-
-const setPrompt = (ideaId: string, prompt: string) => {
-  localStorage.setItem("prompt", JSON.stringify({ ideaId, prompt }));
-};
-
-interface Prompt {
-  ideaId: string;
-  prompt: string;
-}
 
 interface Idea {
   id?: string;
@@ -186,57 +162,18 @@ export default function GeneratePage() {
         if (loading.current) return;
         loading.current = true;
         setIsThinking(true);
-        debugger;
-        const component =
-          templateNameToComponent[selectedTemplate || "ideas-generator"];
-        const componentString = ReactDOMServer.renderToStaticMarkup(
-          component()
-        );
+
         try {
           const landingPage = await axios.post("/api/landing-page", {
             product: { ...values, id },
             templateName: selectedTemplate,
           });
-          // convert
         } catch (error) {
           console.error(error);
         } finally {
           loading.current = false;
           setIsThinking(false);
         }
-        // setIsThinking(true);
-        // const currentPrompt = getPrompt(values.id);
-
-        // if (!currentPrompt) {
-        //   setShouldFakeAIGeneratePrompt(true);
-        //   const randomDelay = Math.floor(Math.random() * 1500) + 2000;
-        //   await new Promise((resolve) => setTimeout(resolve, randomDelay));
-        // } else {
-        //   setShouldFakeAIGeneratePrompt(false);
-        // }
-        setIsThinking(false);
-        // nextStage();
-        const prompt = `Create a captivating landing page for "${
-          values.ideaName
-        }". 
-        The main idea: ${values.elevatorPitch}
-        Additional details: ${values.additionalInfo}
-        ${
-          values.additionalFeature === "email"
-            ? "Include an email capture form for idea validation."
-            : ""
-        }
-        ${
-          values.additionalFeature === "payment"
-            ? "Add a prominent CTA button for the payments page."
-            : ""
-        }
-        The landing page should have a modern, professional design with a hero section, 
-        feature highlights, and compelling copy that encourages user engagement. 
-        Use appropriate imagery and icons to enhance the visual appeal.`;
-
-        setPrompt(id, prompt);
-        setGeneratedPrompt(prompt);
       }
     },
   });
