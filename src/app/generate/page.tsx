@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useMemo } from "react";
+import ReactDOMServer from "react-dom/server";
 import { useFormik } from "formik";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,6 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useClipboard } from "use-clipboard-copy";
 import { FaRegCopy, FaArrowLeft } from "react-icons/fa"; // Import back arrow icon
-import { toast } from "react-toastify";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -35,6 +35,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import TemplateContainer from "../../components/template-container";
+import { PlaceholdersAndVanishInput } from "../../components/ui/palceholder-and-vanish-input";
+import { productDescriptions, templateNameToComponent } from "../../lib/consts";
+import Link from "next/link";
+import { useCustomRouter } from "../../lib/hooks/useCustomRouter";
+import Product from "../../lib/models/product";
+import { TemplateId } from "../../lib/models/template";
+import axios from "axios";
 
 const saveIdea = (idea: Partial<Idea>): string => {
   const existingIdeaString = localStorage.getItem("idea");
@@ -100,7 +109,13 @@ interface Idea {
   additionalFeature?: string;
 }
 
-export default function Component() {
+export default function GeneratePage() {
+  const router = useCustomRouter();
+  const clipboard = useClipboard();
+  const params = useSearchParams();
+
+  const loading = useRef(false);
+
   const [stage, setStage] = useState(1);
   const [isThinking, setIsThinking] = useState(false);
   const [generatedPrompt, setGeneratedPrompt] = useState("");
@@ -109,62 +124,51 @@ export default function Component() {
     useState(true);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showCopyPrompt, setShowCopyPrompt] = useState(false);
-  const [typedPrompt, setTypedPrompt] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateId | null>(
+    null
+  );
 
   const generatedPromptRef = useRef<HTMLDivElement>(null);
 
-  const clipboard = useClipboard();
+  useEffect(() => {
+    const template = params.get("template");
+    if (!template) {
+      router.push("/gallery");
+    }
+    setSelectedTemplate(template as TemplateId);
+  }, [params]);
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const stageString = url.searchParams.get("stage");
-    const stage = stageString ? parseInt(stageString) : null;
     const idea = getIdea();
-    if (stage) {
+    if (Object.keys(idea).length > 0) {
       formik.setValues(idea);
-      if (stage === 4) {
-        const prompt = getPrompt(idea.id);
-        if (prompt) {
-          setGeneratedPrompt(prompt);
-          setShouldFakeAIGeneratePrompt(false);
-        } else {
-          setStage(3);
-        }
-      }
-      setStage(stage);
-    } else {
-      if (Object.keys(idea).length > 0) {
-        formik.setValues(idea);
-        setShowExistingIdeaPrompt(true);
-      }
+      setShowExistingIdeaPrompt(true);
     }
-  }, []);
+    updateStage(1);
+  }, [params]);
+
+  const updateStage = (stage: number) => {
+    if (stage > 0 && stage <= 4) {
+      setStage(stage);
+    }
+  };
 
   const nextStage = () => {
+    const htmlString = ReactDOMServer.renderToStaticMarkup(
+      <TemplateContainer template={selectedTemplate || ""} />
+    );
     if (stage < 4) {
-      setStage(stage + 1);
-      // set query params
-      const url = new URL(window.location.href);
-      url.searchParams.set("stage", String(stage + 1));
-      window.history.pushState({}, "", url.toString());
+      updateStage(stage + 1);
     }
   };
 
   const previousStage = () => {
     if (stage > 1) {
-      setStage(stage - 1);
-      // set query params
-      const url = new URL(window.location.href);
-      if (stage - 1 === 1) {
-        window.history.pushState({}, "", url.origin);
-      } else {
-        url.searchParams.set("stage", String(stage - 1));
-        window.history.pushState({}, "", url.toString());
-      }
+      updateStage(stage - 1);
     }
   };
 
-  const formik = useFormik({
+  const formik = useFormik<Omit<Product, "template">>({
     initialValues: {
       ideaName: "",
       elevatorPitch: "",
@@ -179,18 +183,39 @@ export default function Component() {
       if (stage < 3) {
         nextStage();
       } else if (stage === 3) {
+        if (loading.current) return;
+        loading.current = true;
         setIsThinking(true);
-        const currentPrompt = getPrompt(values.id);
-
-        if (!currentPrompt) {
-          setShouldFakeAIGeneratePrompt(true);
-          const randomDelay = Math.floor(Math.random() * 1500) + 2000;
-          await new Promise((resolve) => setTimeout(resolve, randomDelay));
-        } else {
-          setShouldFakeAIGeneratePrompt(false);
+        debugger;
+        const component =
+          templateNameToComponent[selectedTemplate || "ideas-generator"];
+        const componentString = ReactDOMServer.renderToStaticMarkup(
+          component()
+        );
+        try {
+          const landingPage = await axios.post("/api/landing-page", {
+            product: { ...values, id },
+            templateName: selectedTemplate,
+          });
+          // convert
+        } catch (error) {
+          console.error(error);
+        } finally {
+          loading.current = false;
+          setIsThinking(false);
         }
+        // setIsThinking(true);
+        // const currentPrompt = getPrompt(values.id);
+
+        // if (!currentPrompt) {
+        //   setShouldFakeAIGeneratePrompt(true);
+        //   const randomDelay = Math.floor(Math.random() * 1500) + 2000;
+        //   await new Promise((resolve) => setTimeout(resolve, randomDelay));
+        // } else {
+        //   setShouldFakeAIGeneratePrompt(false);
+        // }
         setIsThinking(false);
-        nextStage();
+        // nextStage();
         const prompt = `Create a captivating landing page for "${
           values.ideaName
         }". 
@@ -226,6 +251,7 @@ export default function Component() {
   const clearLocalStorage = () => {
     localStorage.removeItem("idea");
     localStorage.removeItem("prompt");
+    formik.resetForm();
   };
 
   const handleCopy = () => {
@@ -288,178 +314,202 @@ export default function Component() {
         <motion.div key="back" {...fadeInOut}>
           <Button
             variant="outline"
-            onClick={(e) => {
-              e.preventDefault();
-              previousStage();
-            }}
-            className={cn("flex items-center space-x-2 mb-4", {
-              hidden: stage === 1,
-            })}
+            className={cn("flex items-center space-x-2 mb-4")}
+            asChild={stage === 1}
           >
-            <FaArrowLeft />
-            <span>Back</span>
+            {stage === 1 ? (
+              <Link href={`/gallery`} className="w-fit">
+                <FaArrowLeft />
+                <span>Back to Gallery</span>
+              </Link>
+            ) : (
+              <div
+                className="flex items-center space-x-2 "
+                onClick={(e) => {
+                  e.preventDefault();
+                  previousStage();
+                }}
+              >
+                <FaArrowLeft />
+                <span>Back to Previous stage</span>
+              </div>
+            )}
           </Button>
         </motion.div>
 
-        <AnimatePresence mode="wait">
-          {stage === 1 && (
-            <motion.div key="stage1" className="w-full" {...fadeInOut}>
-              <h2 className="text-2xl md:text-4xl font-bold mb-4">
-                What&apos;s your idea called?
-              </h2>
-              <Input
-                name="ideaName"
-                placeholder="Enter your idea name"
-                onChange={formik.handleChange}
-                value={formik.values.ideaName}
-              />
-            </motion.div>
-          )}
-          {stage === 2 && (
-            <motion.div key="stage2" {...fadeInOut}>
-              <h2 className="text-2xl font-bold mb-4">
-                What&apos;s your elevator pitch?
-              </h2>
-              <Textarea
-                name="elevatorPitch"
-                placeholder="Describe your idea in a few sentences"
-                rows={12}
-                onChange={formik.handleChange}
-                value={formik.values.elevatorPitch}
-              />
-            </motion.div>
-          )}
-          {stage === 3 && (
-            <motion.div key="stage3" {...fadeInOut}>
-              <h2 className="text-2xl font-bold mb-4">
-                Anything else you&apos;d like to add?
-              </h2>
-              <Textarea
-                name="additionalInfo"
-                placeholder="Any additional details?"
-                onChange={formik.handleChange}
-                value={formik.values.additionalInfo}
-                rows={8}
-              />
-              <div className="mt-4">
-                <Label>Additional Feature</Label>
-                <RadioGroup
-                  defaultValue="none"
-                  name="additionalFeature"
-                  value={formik.values.additionalFeature || "none"}
-                  onValueChange={(value: string) => {
-                    formik.setFieldValue("additionalFeature", value);
-                  }}
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="none" id="none" />
-                    <Label htmlFor="none">None</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="email" id="email" />
-                    <Label htmlFor="email">
-                      Add email input to verify the idea
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="payment" id="payment" />
-                    <Label htmlFor="payment">With payment</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </motion.div>
-          )}
-          {stage === 4 && (
-            <motion.div
-              key="stage4"
-              {...fadeInOut}
-              className="flex flex-col h-full"
-            >
-              <h2 className="text-2xl font-bold mb-4">Generated Prompt</h2>
-
-              <div className="flex-shrink">
-                <div
-                  ref={generatedPromptRef}
-                  className="bg-gradient-to-r from-purple-400 to-blue-500 text-white flex flex-col p-4 gap-4 rounded-lg shadow-lg mb-4 border border-opacity-30 border-white overflow-auto h-[400px] max-h-[400px] md:h-[700px] md:max-h-[700px] relative"
-                >
-                  <div
-                    className="sticky top-0 ml-auto h-fit w-fit flex flex-row justify-end gap-3 md:hover:cursor-pointer"
-                    onClick={handleCopy}
-                  >
-                    <Button
-                      variant="outline"
-                      className="h-fit flex flex-row gap-1 rounded-md bg-transparent hover:bg-transparent hover:text-white"
-                      onClick={() => window.open("https://v0.dev", "_blank")}
-                    >
-                      <span className="text-xs">Open</span>
-                      <Image
-                        src="/v0.png"
-                        alt="V0 Logo"
-                        fill
-                        className="!relative !h-[0.8rem]"
-                      />
-                    </Button>
-                    <TooltipProvider>
-                      <Tooltip open={showTooltip}>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className="h-fit flex flex-row gap-1 rounded-md bg-transparent hover:bg-transparent hover:text-white"
-                          >
-                            <FaRegCopy className="cursor-pointer w-4 h-4" />
-                            <span className="text-xs">Copy prompt</span>
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent
-                          side="bottom"
-                          sideOffset={5}
-                          className="bg-black"
-                        >
-                          Prompt copied!
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-                  <span className="font-mono whitespace-pre-wrap overflow-auto">
-                    <Typewriter
-                      words={[generatedPrompt]}
-                      loop={1}
-                      onType={(count) => {
-                        if (generatedPromptRef.current) {
-                          // if not at bottom, scroll to bottom
-                          if (
-                            generatedPromptRef.current.scrollHeight -
-                              generatedPromptRef.current.scrollTop !==
-                            generatedPromptRef.current.clientHeight
-                          ) {
-                            generatedPromptRef.current.scrollTop =
-                              generatedPromptRef.current.scrollHeight;
-                          }
-                        }
-                      }}
-                      onLoopDone={() => setShowCopyPrompt(true)}
-                      typeSpeed={shouldFakeAIGeneratePrompt ? 5 : 0}
-                      deleteSpeed={0}
-                      delaySpeed={1000}
-                    />
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        {stage < 4 && (
-          <Button type="submit" className="w-full">
-            {isThinking ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Thinking...
-              </>
-            ) : (
-              "Next"
+        <TemplateContainer
+          template={selectedTemplate || ""}
+          size="small"
+          className={cn({
+            hidden: stage === 4,
+          })}
+        />
+        <div className="min-h-[360px] flex flex-col gap-3 justify-center">
+          <AnimatePresence mode="wait">
+            {stage === 1 && (
+              <motion.div
+                key="stage1"
+                className="w-full flex flex-col "
+                {...fadeInOut}
+              >
+                <h2 className="text-2xl md:text-4xl font-bold mb-4">
+                  What&apos;s your idea called?
+                </h2>
+                <Input
+                  name="ideaName"
+                  placeholder="Enter your idea name"
+                  onChange={formik.handleChange}
+                  value={formik.values.ideaName}
+                />
+              </motion.div>
             )}
-          </Button>
-        )}
+            {stage === 2 && (
+              <motion.div key="stage2" {...fadeInOut}>
+                <h2 className="text-2xl font-bold mb-4">
+                  What&apos;s your elevator pitch?
+                </h2>
+                <PlaceholdersAndVanishInput
+                  placeholders={productDescriptions}
+                  name="elevatorPitch"
+                  rows={4}
+                  onChange={formik.handleChange}
+                  value={formik.values.elevatorPitch || ""}
+                />
+              </motion.div>
+            )}
+            {stage === 3 && (
+              <motion.div key="stage3" {...fadeInOut}>
+                <h2 className="text-2xl font-bold mb-4">
+                  Anything else you&apos;d like to add?
+                </h2>
+                <Textarea
+                  name="additionalInfo"
+                  placeholder="Any additional details?"
+                  onChange={formik.handleChange}
+                  value={formik.values.additionalInfo}
+                  rows={4}
+                  maxLength={255}
+                />
+                <div className="mt-4">
+                  <Label>Additional Feature</Label>
+                  <RadioGroup
+                    defaultValue="none"
+                    name="additionalFeature"
+                    value={formik.values.additionalFeature || "none"}
+                    onValueChange={(value: string) => {
+                      formik.setFieldValue("additionalFeature", value);
+                    }}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="none" id="none" />
+                      <Label htmlFor="none">None</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="email" id="email" />
+                      <Label htmlFor="email">
+                        Add email input to verify the idea
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="payment" id="payment" />
+                      <Label htmlFor="payment">With payment</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+              </motion.div>
+            )}
+            {stage > 4 && (
+              <motion.div
+                key="stage4"
+                {...fadeInOut}
+                className="flex flex-col h-full"
+              >
+                <h2 className="text-2xl font-bold mb-4">Generated Prompt</h2>
+
+                <div className="flex-shrink">
+                  <div
+                    ref={generatedPromptRef}
+                    className="bg-gradient-to-r from-purple-400 to-blue-500 text-white flex flex-col p-4 gap-4 rounded-lg shadow-lg mb-4 border border-opacity-30 border-white overflow-auto h-[400px] max-h-[400px] md:h-[700px] md:max-h-[700px] relative"
+                  >
+                    <div
+                      className="sticky top-0 ml-auto h-fit w-fit flex flex-row justify-end gap-3 md:hover:cursor-pointer"
+                      onClick={handleCopy}
+                    >
+                      <Button
+                        variant="outline"
+                        className="h-fit flex flex-row gap-1 rounded-md bg-transparent hover:bg-transparent hover:text-white"
+                        onClick={() => window.open("https://v0.dev", "_blank")}
+                      >
+                        <span className="text-xs">Open</span>
+                        <Image
+                          src="/v0.png"
+                          alt="V0 Logo"
+                          fill
+                          className="!relative !h-[0.8rem]"
+                        />
+                      </Button>
+                      <TooltipProvider>
+                        <Tooltip open={showTooltip}>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className="h-fit flex flex-row gap-1 rounded-md bg-transparent hover:bg-transparent hover:text-white"
+                            >
+                              <FaRegCopy className="cursor-pointer w-4 h-4" />
+                              <span className="text-xs">Copy prompt</span>
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent
+                            side="bottom"
+                            sideOffset={5}
+                            className="bg-black"
+                          >
+                            Prompt copied!
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                    <span className="font-mono whitespace-pre-wrap overflow-auto">
+                      <Typewriter
+                        words={[generatedPrompt]}
+                        loop={1}
+                        onType={(count) => {
+                          if (generatedPromptRef.current) {
+                            // if not at bottom, scroll to bottom
+                            if (
+                              generatedPromptRef.current.scrollHeight -
+                                generatedPromptRef.current.scrollTop !==
+                              generatedPromptRef.current.clientHeight
+                            ) {
+                              generatedPromptRef.current.scrollTop =
+                                generatedPromptRef.current.scrollHeight;
+                            }
+                          }
+                        }}
+                        onLoopDone={() => setShowCopyPrompt(true)}
+                        typeSpeed={shouldFakeAIGeneratePrompt ? 5 : 0}
+                        deleteSpeed={0}
+                        delaySpeed={1000}
+                      />
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          {stage < 4 && (
+            <Button type="submit" className="w-full">
+              {isThinking ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Thinking...
+                </>
+              ) : (
+                "Next"
+              )}
+            </Button>
+          )}
+        </div>
       </form>
     </div>
   );

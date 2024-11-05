@@ -20,7 +20,7 @@ import {
   CreditCard,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -33,7 +33,6 @@ const textVariants = {
 };
 
 export default function Component() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -79,7 +78,7 @@ export default function Component() {
         <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32 xl:py-48">
           <div className="container px-4 md:px-6">
             <motion.div
-              className="flex flex-col items-center space-y-4 text-center"
+              className="flex flex-col leading items-center space-y-4 text-center"
               variants={textVariants}
               initial="hidden"
               whileInView="visible"
@@ -96,12 +95,8 @@ export default function Component() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Button
-                  onClick={() => {
-                    router.push("/gallery");
-                  }}
-                >
-                  Get Started
+                <Button asChild>
+                  <Link href="/gallery">View Templates</Link>
                 </Button>
               </div>
             </motion.div>

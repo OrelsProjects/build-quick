@@ -50,7 +50,9 @@ const Layout = ({
       </Head>
 
       <div className="relative">
-        <NavigationBar />
+        <NavigationBar 
+        templateName={templateName}
+        />
         {children}
       </div>
     </>

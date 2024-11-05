@@ -88,7 +88,7 @@ body {
     ::-webkit-scrollbar-track,
     .scrollbar-visible::-webkit-scrollbar-track {
       border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.0); /* Light translucent white */
+      background: rgba(255, 255, 255, 0); /* Light translucent white */
     }
 
     /* Handle */
@@ -96,7 +96,6 @@ body {
     .scrollbar-visible::-webkit-scrollbar-thumb {
       background: rgba(255, 255, 255, 0.7); /* Light translucent white */
       border-radius: 9999px;
-      
     }
 
     /* Hover effect on thumb */

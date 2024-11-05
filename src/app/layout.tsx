@@ -1,7 +1,8 @@
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import * as toast from "react-toastify";
-
+import TopLoaderProvider from "../providers/TopLoaderProvider";
+import AnimationProvider from "../providers/AnimationProvider";
 
 const OG_IMAGE_URL = process.env.NEXT_PUBLIC_OG_IMAGE_URL;
 const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME;
@@ -70,8 +71,9 @@ export default function RootLayout({
             position="bottom-center"
             pauseOnHover={false}
           />
+          <TopLoaderProvider />
         </div>
-        {children}
+        <AnimationProvider>{children}</AnimationProvider>
       </body>
     </html>
   );
