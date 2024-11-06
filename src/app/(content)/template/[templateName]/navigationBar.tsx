@@ -11,7 +11,11 @@ import {
 import { Undo2, Check } from "lucide-react"; // Example icons, replace with your own
 import Link from "next/link";
 
-export default function NavigationBar({templateName}: {templateName: string}) {
+export default function NavigationBar({
+  templateName,
+}: {
+  templateName: string;
+}) {
   return (
     <TooltipProvider delayDuration={50}>
       <motion.div
@@ -34,8 +38,12 @@ export default function NavigationBar({templateName}: {templateName: string}) {
               }}
               className="flex items-center space-x-2 px-1 py-1 rounded-full hover:shadow-md transition-shadow"
             >
-              <Link href="/gallery">
+              <Link
+                href="/gallery"
+                className="flex flex-col justify-center items-center gap-0 text-white text-xs"
+              >
                 <Undo2 className="h-4 w-4 md:h-5 md:w-5 text-gray-200 hover:text-gray-400 transition-colors" />
+                Back
               </Link>
             </motion.div>
           </TooltipTrigger>
@@ -55,7 +63,7 @@ export default function NavigationBar({templateName}: {templateName: string}) {
                 damping: 15,
                 delay: 0.2,
               }}
-              className="flex items-center space-x-2 px-2 py-1 rounded-full hover:shadow-md transition-shadow"
+              className="flex items-center space-x-2 px-3 py-2 rounded-full hover:shadow-md transition-shadow"
             >
               <Link
                 href={
@@ -64,8 +72,10 @@ export default function NavigationBar({templateName}: {templateName: string}) {
                     template: templateName,
                   }).toString()
                 }
+                className="flex flex-col justify-center items-center gap-0 text-white text-xs"
               >
                 <Check className="h-4 w-4 md:h-5 md:w-5 text-gray-200 hover:text-gray-400 transition-colors" />
+                Yes!
               </Link>
             </motion.div>
           </TooltipTrigger>

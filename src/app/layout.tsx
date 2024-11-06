@@ -75,7 +75,7 @@ export default function RootLayout({
             />
             <TopLoaderProvider />
           </div>
-          <AnimationProvider>{children}</AnimationProvider>
+            <AnimationProvider>{children}</AnimationProvider>
         </Suspense>
       </body>
     </html>

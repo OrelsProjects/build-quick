@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { templates } from "../../lib/consts";
-import TemplateContainer from "../../components/template-container";
+import { templates } from "@/lib/consts";
+import TemplateContainer from "@/components/template-container";
 
 export default function Component() {
 
   return (
-    <div className="w-full h-full bg-gradient-to-b from-violet-100/30 to-indigo-100/30">
+    <div className="w-full h-full bg-gradient-to-b from-violet-100/30 to-indigo-100/30 font-sans">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-center mb-8">
           Choose your template

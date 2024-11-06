@@ -39,7 +39,7 @@ export async function generateLandingPage(
   templateCode: string,
   isFreeUser = true
 ): Promise<LandingPage | null> {
-  const selectedModel: Model = !isFreeUser ? "gpt-4o-mini" : "gpt-4o";
+  const selectedModel: Model = isFreeUser ? "gpt-4o-mini" : "gpt-4o";
   //   const styleGuideResponse = await openai.chat.completions.create({
   //     model: selectedModel,
   //     messages: [
@@ -86,7 +86,7 @@ export async function generateLandingPage(
   }
 
   const timeToRun = new Date().getTime() - now.getTime();
-  console.log("Time to run", timeToRun);
-
+  const timeToRunMinutes = timeToRun / 60000;
+  console.log("Time to run: ", timeToRunMinutes + " minutes");
   return landingPage;
 }

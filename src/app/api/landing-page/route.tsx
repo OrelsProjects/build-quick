@@ -9,6 +9,12 @@ export const maxDuration = 60; // 5 minutes
 // TODO: Make sure the user has enough permissions to access this route. maybe via ip verification or something
 export async function POST(req: NextRequest) {
   try {
+    if (process.env.NODE_ENV !== "development") {
+      return NextResponse.json(
+        { error: "This route is not reachable at the moment" },
+        { status: 404 }
+      );
+    }
     const body = await req.json();
     const {
       product,

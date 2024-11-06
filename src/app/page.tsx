@@ -18,6 +18,7 @@ import {
   Layers,
   Server,
   CreditCard,
+  Move3D,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -90,7 +91,7 @@ export default function Component() {
                   Launch Your Project in Minutes
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Turn your idea into a fully functional landing page with just
+                  Turn your idea into a fully functional web app with just
                   a few clicks. No coding required.
                 </p>
               </div>
@@ -182,13 +183,14 @@ export default function Component() {
               <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {/* TypeScript Card */}
                 <motion.div
+                  className="md:min-h-[176px]"
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <Card>
+                  <Card className="h-full">
                     <CardHeader>
                       <Code className="h-8 w-8 mb-2" />
                       <CardTitle>TypeScript</CardTitle>
@@ -202,13 +204,14 @@ export default function Component() {
                 </motion.div>
                 {/* React & Next.js Card */}
                 <motion.div
+                  className="md:min-h-[176px]"
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <Card>
+                  <Card className="h-full">
                     <CardHeader>
                       <Rocket className="h-8 w-8 mb-2" />
                       <CardTitle>React & Next.js</CardTitle>
@@ -222,13 +225,14 @@ export default function Component() {
                 </motion.div>
                 {/* Tailwind CSS Card */}
                 <motion.div
+                  className="md:min-h-[176px]"
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <Card>
+                  <Card className="h-full">
                     <CardHeader>
                       <svg
                         className="h-8 w-8 mb-2"
@@ -247,15 +251,36 @@ export default function Component() {
                     </CardContent>
                   </Card>
                 </motion.div>
-                {/* shadcn/ui Card */}
                 <motion.div
+                  className="md:min-h-[176px]"
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <Card>
+                  <Card className="h-full">
+                    <CardHeader>
+                      <Move3D className="h-8 w-8 mb-2" />
+                      <CardTitle>Framer Motion</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Smooth animations and interactive UI
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+                {/* shadcn/ui Card */}
+                <motion.div
+                  className="md:min-h-[176px]"
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Card className="h-full">
                     <CardHeader>
                       <svg
                         className="h-8 w-8 mb-2"
@@ -276,13 +301,14 @@ export default function Component() {
                 </motion.div>
                 {/* Prisma Card with Different Icon */}
                 <motion.div
+                  className="md:min-h-[176px]"
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <Card>
+                  <Card className="h-full">
                     <CardHeader>
                       <Layers className="h-8 w-8 mb-2" />
                       <CardTitle>Prisma</CardTitle>
@@ -296,13 +322,14 @@ export default function Component() {
                 </motion.div>
                 {/* Database Card */}
                 <motion.div
+                  className="md:min-h-[176px]"
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <Card>
+                  <Card className="h-full">
                     <CardHeader>
                       <Server className="h-8 w-8 mb-2" />
                       <CardTitle>Supabase or MongoDB</CardTitle>
@@ -315,13 +342,14 @@ export default function Component() {
                   </Card>
                 </motion.div>
                 <motion.div
+                  className="md:min-h-[176px]"
                   variants={cardVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <Card>
+                  <Card className="h-full">
                     <CardHeader>
                       <CreditCard className="h-8 w-8 mb-2" />
                       <CardTitle>Payment</CardTitle>

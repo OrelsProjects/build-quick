@@ -94,14 +94,14 @@ body {
     /* Handle */
     ::-webkit-scrollbar-thumb,
     .scrollbar-visible::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.7); /* Light translucent white */
+      background: rgba(30, 30, 30, 0.4); /* Light translucent white */
       border-radius: 9999px;
     }
 
     /* Hover effect on thumb */
     ::-webkit-scrollbar-thumb:hover,
     .scrollbar-visible::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(30, 30, 30, 0.7); /* Light translucent white */
     }
   }
 }

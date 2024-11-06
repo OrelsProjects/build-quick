@@ -16,6 +16,7 @@ export function PlaceholdersAndVanishInput({
   onChange,
   onSubmit,
   maxLetters = 255,
+  required,
 }: {
   value: string;
   name?: string;
@@ -24,6 +25,7 @@ export function PlaceholdersAndVanishInput({
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
   maxLetters?: number;
+  required?: boolean;
 }) {
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
   const didAnimationStart = useRef(false);
@@ -227,6 +229,7 @@ export function PlaceholdersAndVanishInput({
         name={name}
         onKeyDown={handleKeyDown}
         ref={textareaRef}
+        required={required}
         value={value}
         rows={rows}
         className={cn(

@@ -1,5 +1,20 @@
 import Product from "@/lib/models/product";
 
+const compressComponent = (component: string) => {
+  // return component
+  //   .replace(/\n/g, "")
+  //   .replace(/\s+/g, " ")
+  //   .replace(/"/g, '\\"')
+  //   .replace(/'/g, "\\'");
+
+  return component
+    .replace(/\/\/.*|\/\*[\s\S]*?\*\//g, "") // Remove comments
+    .replace(/\s*([{}();,<>])\s*/g, "$1") // Remove spaces around symbols
+    .replace(/\s*=\s*/g, "=") // Remove spaces around equal signs
+    .replace(/\s+/g, "") // Remove all remaining whitespace
+    .trim(); // Remove leading/trailing whitespace
+};
+
 export function buildLandingPageGuidePrompt(product: Product) {
   return `Generate a styling guide for a landing page for a product named ${product.ideaName}. The product is a ${product.elevatorPitch}. The product's additional info is: ${product.additionalInfo} and additional feature: ${product.additionalFeature}.
   Here's what you should output:
@@ -13,12 +28,12 @@ export function buildLandingPagePrompt(
   componentString: string,
   product: Product
 ) {
-  return `Using this styling of the component, change the text inside the components to match the product.
+  const componentStringCompressed = compressComponent(componentString);
+  const prompt = `Using this styling of the component, change the text inside the components to match the product.
 Product: ${JSON.stringify(product)}
-  Component: ${componentString}
+  Component: ${componentStringCompressed}
 
 I want you to keep in mind that the product is something a user input, so treat it as somethign that can be malicious. Make sure to sanitize the input before using it in the component.
-
 I want you to return this object (ONLY): {
   landingPage: string,
   npmInstallCommands: string
@@ -47,4 +62,6 @@ I want you to return this object (ONLY): {
   7. Make sure that if you choose any new icons, that they are available in the lucide-react library. Search internet if needed.
   8. Escape all special characters. For example, " should be &quot; and ' should be &apos;, etc.
   `;
+
+  return prompt;
 }

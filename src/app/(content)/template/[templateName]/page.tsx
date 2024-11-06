@@ -41,7 +41,11 @@ const TemplateRenderer = ({ params }: { params: { templateName: string } }) => {
     return <div>Template not found</div>;
   }
 
-  return <SelectedComponent />;
+  return (
+    <div className="font-sans">
+      <SelectedComponent />
+    </div>
+  );
 };
 
 export default TemplateRenderer;

@@ -4,7 +4,9 @@ import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-
 import { useRouter, useSearchParams } from "next/navigation";
 
 export interface CustomRouterOptions {
-  preserveQuery: boolean | null; // Use null for now to not preserve query and not break existing code
+  preserveQuery?: boolean | null; // Use null for now to not preserve query and not break existing code
+  paramsToRemove?: string[];
+  paramsToAdd?: Record<string, string>;
 }
 
 export function useCustomRouter() {
@@ -13,7 +15,7 @@ export function useCustomRouter() {
 
   const push = (
     href: string,
-    routerOptions?: CustomRouterOptions,
+    routerOptions: CustomRouterOptions = { preserveQuery: true },
     options?: NavigateOptions
   ) => {
     // HACK: If relative URL given, stick the current host on the string passed to URL()
@@ -24,6 +26,18 @@ export function useCustomRouter() {
 
     if (routerOptions?.preserveQuery) {
       searchParams.forEach((val, key) => {
+        url.searchParams.append(key, val);
+      });
+    }
+
+    if (routerOptions?.paramsToRemove) {
+      routerOptions.paramsToRemove.forEach((key) => {
+        url.searchParams.delete(key);
+      });
+    }
+
+    if (routerOptions?.paramsToAdd) {
+      Object.entries(routerOptions.paramsToAdd).forEach(([key, val]) => {
         url.searchParams.append(key, val);
       });
     }

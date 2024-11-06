@@ -63,12 +63,6 @@ export default function IdeasGenerator() {
             className="text-sm font-medium hover:underline underline-offset-4"
             href="#"
           >
-            Pricing
-          </a>
-          <a
-            className="text-sm font-medium hover:underline underline-offset-4"
-            href="#"
-          >
             About
           </a>
         </nav>
@@ -336,63 +330,6 @@ export default function IdeasGenerator() {
           </div>
         </section>
 
-        {/* Pricing Section */}
-        <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <motion.div
-              className="flex flex-col items-center justify-center space-y-4 text-center"
-              variants={textVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Pricing Plans
-                </h2>
-                <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                  Choose a plan that suits your needs.
-                </p>
-              </div>
-              <div className="container grid gap-8 sm:grid-cols-2 md:grid-cols-3 px-28">
-                {["Basic", "Pro", "Enterprise"].map((plan) => (
-                  <motion.div
-                    key={plan}
-                    variants={cardVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Card
-                    className="aspect-[4/4]"
-                    >
-                      <CardHeader>
-                        <CardTitle>{plan}</CardTitle>
-                        <CardDescription>
-                          {plan === "Basic" && "$19/month"}
-                          {plan === "Pro" && "$49/month"}
-                          {plan === "Enterprise" && "Custom Pricing"}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
-                          <li>Feature 1</li>
-                          <li>Feature 2</li>
-                          <li>Feature 3</li>
-                        </ul>
-                        <Button className="mt-4">
-                          {plan === "Enterprise" ? "Contact Us" : "Buy Now"}
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
         <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <motion.div
