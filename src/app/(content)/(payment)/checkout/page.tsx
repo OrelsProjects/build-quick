@@ -232,7 +232,7 @@ export default function CheckoutPage() {
           <Card>
             <CardHeader>
               <CardTitle className="text-xl font-semibold">
-                What's Included
+                What&apos;s Included
               </CardTitle>
             </CardHeader>
             <CardContent>

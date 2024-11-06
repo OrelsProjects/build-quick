@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
-    let discount = parseFloat(process.env.EARLY_BIRD_DISCOUNT || "1");
+    const discount = parseFloat(process.env.EARLY_BIRD_DISCOUNT || "1");
     const value = item.price * discount;
 
     const order: { id: string; status: string } = await createOrder({
