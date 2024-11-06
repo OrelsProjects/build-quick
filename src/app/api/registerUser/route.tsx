@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
   try {
     const { interestedUser, product }: Body = await req.json();
     console.log("interestedUser", interestedUser);
+
     const existingUser = await prisma.interestedUser.findFirst({
       where: {
         email: interestedUser,
@@ -51,6 +52,7 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error: any) {
+    console.error("Error registering user", { error });
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MousePointer, List, MessageCircle } from "lucide-react";
@@ -202,7 +204,7 @@ export default function OnboardFlow() {
               className="!relative !w-24 !h-24 rounded-full mx-auto mb-6"
             />
             <blockquote className="text-xl text-gray-600 mb-6">
-            &quot;OnboardFlow transformed our user experience. We saw a 40%
+              &quot;OnboardFlow transformed our user experience. We saw a 40%
               increase in user activation within the first month!&quot;
             </blockquote>
             <p className="font-semibold text-gray-800">
