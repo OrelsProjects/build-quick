@@ -5,6 +5,7 @@ import TopLoaderProvider from "../providers/TopLoaderProvider";
 import AnimationProvider from "../providers/AnimationProvider";
 import { Suspense } from "react";
 import PaidPlanProvider from "../providers/PaidPlanProvider";
+import AnalyticsProvider from "../providers/AnalyticsProvider";
 
 const OG_IMAGE_URL = process.env.NEXT_PUBLIC_OG_IMAGE_URL;
 const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME;
@@ -77,6 +78,7 @@ export default function RootLayout({
             <TopLoaderProvider />
           </div>
           <PaidPlanProvider />
+          <AnalyticsProvider />
           <AnimationProvider>{children}</AnimationProvider>
         </Suspense>
       </body>
