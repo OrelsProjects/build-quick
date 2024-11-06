@@ -12,12 +12,7 @@ export default function PaidPlanProvider() {
   const searchParams = useSearchParams();
   const [openPaidPlan, setOpenPaidPlan] = useState(false);
 
-  useEffect(() => {
-    const showRepository = searchParams.get("repository") === "true";
-    if (showRepository) {
-      setOpenPaidPlan(true);
-    }
-  }, [searchParams]);
+  useEffect(() => {}, [searchParams]);
 
   useEffect(() => {
     const encodedEmail = searchParams.get("to");
@@ -31,7 +26,12 @@ export default function PaidPlanProvider() {
           paramsToAdd: { email },
         });
       })
-      .catch(() => {});
+      .catch(() => {
+        const showRepository = searchParams.get("repository") === "true";
+        if (showRepository) {
+          setOpenPaidPlan(true);
+        }
+      });
   });
 
   const email = useMemo(() => {
