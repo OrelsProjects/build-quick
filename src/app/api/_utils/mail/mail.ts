@@ -8,7 +8,7 @@ export const sendWelcomeMail = async (
   const data = {
     from: "Build Quick <postmaster@mail.buildquick.app>",
     to: to,
-    subject: "Welcome to Build Quick!" + (paid ? "(Payment confirmed)" : ""),
+    subject: "Welcome to Build Quick!" + (paid ? " (Payment confirmed)" : ""),
     html: welcomeTemplate(paid, to),
   };
 
