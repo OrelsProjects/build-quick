@@ -1,5 +1,5 @@
 import React from "react";
-import Template, { TemplateId } from "@/lib/models/template";
+import Template, { TemplateId } from "../models/template";
 import DataHarvester from "@/components/template/data-harvester";
 import IdeasGenerator from "@/components/template/ideas-generator";
 import LogoGenerator from "@/components/template/logo-generator";

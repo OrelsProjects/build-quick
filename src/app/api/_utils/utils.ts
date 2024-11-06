@@ -1,4 +1,4 @@
-import Product from "@/lib/models/product";
+import Product from "../../../models/product";
 
 const compressComponent = (component: string) => {
   // return component

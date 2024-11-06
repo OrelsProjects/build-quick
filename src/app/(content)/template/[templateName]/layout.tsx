@@ -40,7 +40,7 @@ const Layout = ({
     <>
       <Head>
         {/* Other meta tags */}
-        <meta property="og:title" content={document.title} />
+        <meta property="og:title" content={document?.title} />
         <meta property="og:image" content={ogImageUrl} />
         <meta property="og:type" content="website" />
         <meta

@@ -4,6 +4,7 @@ import * as toast from "react-toastify";
 import TopLoaderProvider from "../providers/TopLoaderProvider";
 import AnimationProvider from "../providers/AnimationProvider";
 import { Suspense } from "react";
+import PaidPlanProvider from "../providers/PaidPlanProvider";
 
 const OG_IMAGE_URL = process.env.NEXT_PUBLIC_OG_IMAGE_URL;
 const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME;
@@ -75,7 +76,8 @@ export default function RootLayout({
             />
             <TopLoaderProvider />
           </div>
-            <AnimationProvider>{children}</AnimationProvider>
+          <PaidPlanProvider />
+          <AnimationProvider>{children}</AnimationProvider>
         </Suspense>
       </body>
     </html>

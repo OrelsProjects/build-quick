@@ -18,40 +18,40 @@ export function useCustomRouter() {
     routerOptions: CustomRouterOptions = { preserveQuery: true },
     options?: NavigateOptions
   ) => {
-    // HACK: If relative URL given, stick the current host on the string passed to URL()
-    // as the constructor throws an error if URL without a host is given
-    const url = new URL(
-      href.includes("http") ? href : window.location.host + href
-    );
-
+    // If relative URL, prepend the current origin
+    const baseUrl = href.startsWith("http") ? href : `${window.location.origin}${href}`;
+    const url = new URL(baseUrl);
+  
     if (routerOptions?.preserveQuery) {
       searchParams.forEach((val, key) => {
-        url.searchParams.append(key, val);
+        if (!url.searchParams.has(key)) {
+          url.searchParams.append(key, val);
+        }
       });
     }
-
+  
     if (routerOptions?.paramsToRemove) {
       routerOptions.paramsToRemove.forEach((key) => {
         url.searchParams.delete(key);
       });
     }
-
+  
     if (routerOptions?.paramsToAdd) {
       Object.entries(routerOptions.paramsToAdd).forEach(([key, val]) => {
-        url.searchParams.append(key, val);
+        url.searchParams.set(key, val); // Use set to ensure updated values replace old ones
       });
     }
-
+  
     let urlString = url.toString();
-
-    // If the href arg was relative, strip everything before the first '/' to
-    // revert it back to a relative URL we can pass into the router.push() method
-    if (!href.includes("http")) {
-      urlString = urlString.substring(urlString.indexOf("/"));
+  
+    // If the href argument was relative, revert it back to relative for router.push
+    if (!href.startsWith("http")) {
+      urlString = url.pathname + url.search;
     }
-
+  
     router.push(urlString, options);
   };
+  
 
   return { ...router, push };
 }

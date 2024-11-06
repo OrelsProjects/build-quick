@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateLandingPage } from "../_utils/openai";
-import Product from "@/lib/models/product";
+import Product from "../../../models/product";
 import fs from "fs";
 import path from "path";
 

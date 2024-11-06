@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import Template, { TemplateRouter } from "../lib/models/template";
+import Template, { TemplateRouter } from "../models/template";
 import { Card, CardContent } from "./ui/card";
 import { templates } from "../lib/consts";
 import { useMemo } from "react";

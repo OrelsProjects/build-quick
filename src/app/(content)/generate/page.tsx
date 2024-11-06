@@ -6,7 +6,6 @@ import { useFormik } from "formik";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { FaArrowLeft } from "react-icons/fa";
 import {
@@ -28,7 +27,6 @@ import { PlaceholdersAndVanishInput } from "@/components/ui/palceholder-and-vani
 import { productDescriptions } from "@/lib/consts";
 import { useCustomRouter } from "@/lib/hooks/useCustomRouter";
 import _ from "lodash";
-import PaymentSideBar from "@/components/paymentSideBar";
 import {
   Dialog,
   DialogContent,
@@ -36,6 +34,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import axios from "axios";
+import { ProductRequest } from "@prisma/client";
+import { object, string } from "yup";
+import PaymentSideBar from "../../../components/paymentSideBar";
 
 const STORAGE_KEY_IDEA = "build-quick-idea";
 const STORAGE_KEY_PROMPT = "build-quick-prompt";
@@ -81,12 +83,16 @@ interface Idea {
   email?: string;
 }
 
+const schema = object({
+  ideaName: string().required(),
+  elevatorPitch: string().required(),
+  email: string().email().required(),
+});
+
 export default function GeneratePage() {
   const router = useCustomRouter();
   const pathname = usePathname();
   const params = useSearchParams();
-
-  const loading = useRef(false);
 
   const [stage, setStage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -104,6 +110,7 @@ export default function GeneratePage() {
     },
     enableReinitialize: true,
     onSubmit: async (values: Idea) => {
+      debugger;
       const idea = { ...values };
       const id = saveIdea(values);
       formik.setValues({ ...idea, id });
@@ -118,11 +125,30 @@ export default function GeneratePage() {
         setIsLoading(false);
         nextStage();
       } else if (stage === 3) {
-        setLoadingSubmitEmail(true);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setSubmissionComplete(true);
-        setShowThankYouDialog(true);
-        setLoadingSubmitEmail(false);
+        try {
+          setLoadingSubmitEmail(true);
+          const body: {
+            interestedUser: string;
+            product: Partial<ProductRequest>;
+          } = {
+            interestedUser: idea.email || "",
+            product: {
+              ideaName: idea.ideaName,
+              elevatorPitch: idea.elevatorPitch,
+              templateName: selectedTemplate || "",
+              wasInterestedInTemplate: false,
+              additionalFeature: idea.additionalFeature,
+              additionalInfo: idea.additionalInfo,
+            },
+          };
+          await axios.post("/api/registerUser", body);
+          setSubmissionComplete(true);
+          setShowThankYouDialog(true);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoadingSubmitEmail(false);
+        }
       }
     },
   });
@@ -148,17 +174,24 @@ export default function GeneratePage() {
       formik.setValues(idea);
       setShowExistingIdeaPrompt(true);
     }
-    updateStage(1);
+    setSpecificStage(1);
   }, [params]);
 
   useEffect(() => {
     const stageString = params.get("stage");
     const stage = parseInt(stageString || "1", 10);
-    updateStage(stage);
+    debugger;
+    if (formik.values.ideaName === "") {
+      updateStage(1);
+    } else if (formik.values.elevatorPitch === "") {
+      updateStage(2);
+    } else {
+      updateStage(stage);
+    }
   }, [params]);
 
   const showRepositoryPurchase = useMemo(() => {
-    return params.get("repository") === "true";
+    return params.get("get-repository") === "true";
   }, [params]);
 
   const canPressNext = useMemo(() => {
@@ -189,6 +222,15 @@ export default function GeneratePage() {
     }
   };
 
+  const setSpecificStage = (stage: number) => {
+    const paramsToAdd = stage > 1 ? { stage: stage.toString() } : undefined;
+    router.push(pathname, {
+      preserveQuery: true,
+      paramsToRemove: ["stage"],
+      paramsToAdd,
+    });
+  };
+
   const previousStage = () => {
     const newStage = stage - 1;
     if (newStage >= 1) {
@@ -203,11 +245,17 @@ export default function GeneratePage() {
     transition: { duration: 0.5 },
   };
 
-  const handleRepositoryClick = () => {
-    router.push(pathname, {
-      preserveQuery: true,
-      paramsToAdd: { repository: "true" },
-    });
+  const handleRepositoryClick = async () => {
+    // check if email is inserted correctly
+    try {
+      await schema.validate(formik.values);
+      router.push(pathname, {
+        preserveQuery: true,
+        paramsToAdd: { "get-repository": "true" },
+      });
+    } catch (error: any) {
+      formik.setErrors({ email: error.message });
+    }
   };
 
   const handleRepositoryClose = (open: boolean) => {
@@ -216,10 +264,11 @@ export default function GeneratePage() {
     }
   };
 
-  const clearLocalStorage = () => {
+  const onStartFresh = () => {
     localStorage.removeItem(STORAGE_KEY_IDEA);
     localStorage.removeItem(STORAGE_KEY_PROMPT);
     formik.resetForm();
+    setSpecificStage(1);
   };
 
   return (
@@ -248,7 +297,7 @@ export default function GeneratePage() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={clearLocalStorage}>
+            <AlertDialogCancel onClick={onStartFresh}>
               No, start fresh
             </AlertDialogCancel>
             <AlertDialogAction
@@ -344,6 +393,7 @@ export default function GeneratePage() {
                   name="email"
                   type="email"
                   placeholder="Enter your best email"
+                  error={!!formik.errors.email}
                   required
                   onChange={(e) => {
                     formik.handleChange(e);
@@ -429,30 +479,16 @@ export default function GeneratePage() {
               <br />- Orel
             </DialogDescription>
           </DialogHeader>
-          {/* <div className="flex flex-col items-center gap-4">
-            <Button
-              type="button"
-              onClick={handleRepositoryClick}
-              className="w-full"
-            >
-              Get the full code repository
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setShowThankYouDialog(false)}
-              className="w-full"
-            >
-              Close
-            </Button>
-          </div> */}
         </DialogContent>
       </Dialog>
 
-      <PaymentSideBar
-        open={showRepositoryPurchase}
-        onOpenChange={handleRepositoryClose}
-      />
+      {formik.values.email && (
+        <PaymentSideBar
+          email={formik.values.email}
+          open={showRepositoryPurchase}
+          onOpenChange={handleRepositoryClose}
+        />
+      )}
     </div>
   );
 }

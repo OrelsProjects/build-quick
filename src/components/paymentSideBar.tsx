@@ -12,33 +12,37 @@ import {
 import { CheckCircle, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "../lib/utils";
+import Link from "next/link";
 
 export interface PaymentSideBarProps {
   open: boolean;
+  email: string;
   onOpenChange: (open: boolean) => void;
 }
 
+export const features = [
+  "React project with TypeScript and NextJS",
+  "TailwindCSS for styling",
+  "Prisma ORM",
+  "MongoDB/Supabase database",
+  "NextAuth for authentication",
+  "Framer Motion for animations",
+  "PayPal integration for payments",
+  "Beautiful UI using Shadcn components",
+  "Posthog for advanced analytics and session records",
+];
+
+export const bonuses = [
+  "A written guide to help you get started",
+  "A full-length video course explaining how to build this project from scratch",
+];
+
 export default function PaymentSideBar({
   open,
+  email,
   onOpenChange,
 }: PaymentSideBarProps) {
-  const features = [
-    "React project with TypeScript and NextJS",
-    "TailwindCSS for styling",
-    "Prisma ORM",
-    "MongoDB/Supabase database",
-    "NextAuth for authentication",
-    "Framer Motion for animations",
-    "PayPal integration for payments",
-    "Beautiful UI using Shadcn components",
-    "Posthog for advanced analytics and session records",
-  ];
-
-  const bonuses = [
-    "A written guide to help you get started",
-    "A full-length video course explaining how to build this project from scratch",
-  ];
-
+  console.log("open", open);
   const FullRefund = ({ className }: { className?: string }) => (
     <motion.p
       initial={{ opacity: 0, y: 20 }}
@@ -69,9 +73,7 @@ export default function PaymentSideBar({
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h3 className="text-lg font-semibold">
-              What&apos;s Included:
-            </h3>
+            <h3 className="text-lg font-semibold">What&apos;s Included:</h3>
             <h5 className="mb-2 text-gray-600">A full repository with:</h5>
             <ul className="space-y-2">
               {features.map((feature, index) => (
@@ -119,7 +121,8 @@ export default function PaymentSideBar({
             <p className="text-base font-medium">
               This product is actively in development. By purchasing today,
               you&apos;re not only supporting the final stages of development
-              but also securing early access price and awesome benefits in future products!
+              but also securing early access price and awesome benefits in
+              future products!
             </p>
           </motion.div>
 
@@ -155,13 +158,18 @@ export default function PaymentSideBar({
               </div>
               <Button
                 className="w-full bg-white text-blue-600 hover:bg-blue-50 transition-all duration-300 text-lg font-semibold py-6"
-                onClick={() => {
-                  // Handle payment logic here
-                  console.log("Processing payment...");
-                }}
+                asChild
               >
-                Get Early Access Now
+                <Link href={`/checkout/${email ? `?to=${email}` : ""}`}>
+                  Get Early Access Now
+                </Link>
               </Button>
+              {email && (
+                <p className="text-gray-300 text-xs mt-1">
+                  A confirmation will be sent to{" "}
+                  <span className="underline">{email}</span>
+                </p>
+              )}
             </div>
             <p className="text-center text-sm text-gray-600">
               🔒 Secure payment powered by PayPal

@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import Product from "@/lib/models/product";
+import Product from "../../../models/product";
 import { buildLandingPageGuidePrompt, buildLandingPagePrompt } from "./utils";
 import { ChatCompletion } from "openai/resources/index.mjs";
 
