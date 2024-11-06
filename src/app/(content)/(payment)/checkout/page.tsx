@@ -58,7 +58,13 @@ export default function CheckoutPage() {
   } | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [email, setEmail] = React.useState(searchParams.get("to") || "");
-  const { approveOrder, cancelOrder, createOrder, getOrder } = usePayments();
+  const {
+    approveOrder,
+    cancelOrder,
+    createOrder,
+    getOrder,
+    verifyUserPayment,
+  } = usePayments();
 
   const fetchOrder = async () => {
     if (loadingFetchOrder.current) return;
@@ -79,6 +85,17 @@ export default function CheckoutPage() {
   useEffect(() => {
     fetchOrder();
   }, []);
+
+  useEffect(() => {
+    verifyUserPayment(email)
+      .then(() => {
+        router.push("/checkout/success", {
+          preserveQuery: false,
+          paramsToAdd: { email },
+        });
+      })
+      .catch(() => {});
+  });
 
   const handleCreateOrder = async () => await createOrder(planId, email);
 
