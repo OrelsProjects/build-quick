@@ -91,12 +91,12 @@ export default function Component() {
                   Launch Your Project in Minutes
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Turn your idea into a fully functional web app with just
-                  a few clicks. No coding required.
+                  Turn your idea into a fully functional web app with just a few
+                  clicks. No coding required.
                 </p>
               </div>
               <div className="space-x-4">
-                <Button asChild>
+                <Button asChild className="px-10 py-4 text-lg">
                   <Link href="/gallery">View Templates</Link>
                 </Button>
               </div>
@@ -367,7 +367,7 @@ export default function Component() {
         </section>
 
         {/* Pricing Section */}
-        <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32">
+        {/* <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <motion.div
               className="flex flex-col items-center justify-center space-y-4 text-center"
@@ -420,7 +420,7 @@ export default function Component() {
               </div>
             </motion.div>
           </div>
-        </section>
+        </section> */}
         <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <motion.div
@@ -431,11 +431,16 @@ export default function Component() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="space-y-2">
+              <div className="space-y-4">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
                   Ready to Get Started?
                 </h2>
-                <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                <div className="space-x-4">
+                  <Button asChild className="px-10 py-4 text-lg">
+                    <Link href="/gallery">View Templates</Link>
+                  </Button>
+                </div>
+                {/* <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                   Sign up now to be notified when we launch. Be among the first
                   to create your perfect landing page.
                 </p>
@@ -468,6 +473,7 @@ export default function Component() {
                     )}
                   </Button>
                 </form>
+               */}
               </div>
             </motion.div>
           </div>
