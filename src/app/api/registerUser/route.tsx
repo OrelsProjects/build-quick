@@ -11,12 +11,15 @@ type Body = {
 export async function POST(req: NextRequest) {
   try {
     const { interestedUser, product }: Body = await req.json();
-
+    console.log("interestedUser", interestedUser);
     const existingUser = await prisma.interestedUser.findFirst({
       where: {
         email: interestedUser,
       },
     });
+
+    console.log("existingUser", existingUser);
+
     if (!existingUser) {
       await prisma.interestedUser.create({
         data: {
@@ -24,6 +27,8 @@ export async function POST(req: NextRequest) {
         },
       });
     }
+
+    console.log("product", product);
 
     await prisma.productRequest.create({
       data: {
@@ -34,8 +39,11 @@ export async function POST(req: NextRequest) {
         userEmail: interestedUser,
       },
     });
+
     if (!existingUser) {
+      console.log("sendWelcomeMail");
       await sendWelcomeMail(interestedUser, false);
+      console.log("sendWelcomeMail done");
     }
 
     return NextResponse.json(
