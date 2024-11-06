@@ -25,6 +25,7 @@ export default function PaidPlanProvider() {
     const email = decodeURIComponent(encodedEmail);
     verifyUserPayment(email)
       .then(() => {
+        setOpenPaidPlan(false);
         router.push("/checkout/success", {
           preserveQuery: false,
           paramsToAdd: { email },
