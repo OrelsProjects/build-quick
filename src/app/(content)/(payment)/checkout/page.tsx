@@ -57,7 +57,9 @@ export default function CheckoutPage() {
     discount: number;
   } | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [email, setEmail] = React.useState(searchParams.get("to") || "");
+  const [email, setEmail] = React.useState(
+    decodeURI(searchParams.get("to") || "")
+  );
   const {
     approveOrder,
     cancelOrder,
