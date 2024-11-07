@@ -9,7 +9,7 @@ export default function usePayments() {
   const pathname = usePathname();
 
   const showRepositoryPaymentSideBar = (email?: string) => {
-    let paramsToAdd = {
+    const paramsToAdd = {
       repository: "true",
       to: email || "",
     };
