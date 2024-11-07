@@ -60,6 +60,7 @@ export default function CheckoutPage() {
   const [email, setEmail] = React.useState(
     decodeURI(searchParams.get("to") || "")
   );
+
   const {
     approveOrder,
     cancelOrder,
@@ -97,7 +98,7 @@ export default function CheckoutPage() {
         });
       })
       .catch(() => {});
-  });
+  }, []);
 
   const handleCreateOrder = async () => await createOrder(planId, email);
 

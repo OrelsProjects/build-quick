@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "../lib/utils";
 import Link from "next/link";
 import { useCustomRouter } from "../lib/hooks/useCustomRouter";
+import { usePathname } from "next/navigation";
 
 export interface PaymentSideBarProps {
   open: boolean;
@@ -44,6 +45,7 @@ export default function PaymentSideBar({
   onOpenChange,
 }: PaymentSideBarProps) {
   const router = useCustomRouter();
+  const pathname = usePathname();
 
   const FullRefund = ({ className }: { className?: string }) => (
     <motion.p
@@ -65,8 +67,14 @@ export default function PaymentSideBar({
     });
   };
 
+  const handleOpenChange = (open: boolean) => {
+    onOpenChange(open);
+    if (!open) {
+      router.push(pathname, { preserveQuery: false });
+    }
+  };
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
+    <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetContent
         side="right"
         className="w-[90%] sm:w-6/12 sm:max-w-1xl overflow-auto scroll-"

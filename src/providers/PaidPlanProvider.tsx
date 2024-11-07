@@ -18,7 +18,7 @@ export default function PaidPlanProvider() {
   useEffect(() => {
     const showRepository = searchParams.get("repository") === "true";
     setOpenPaidPlan(showRepository);
-
+    console.log("showRepository", showRepository);
     const encodedEmail = searchParams.get("to") || "";
     const email = decodeURIComponent(encodedEmail);
     verifyUserPayment(email)

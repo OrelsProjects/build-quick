@@ -18,12 +18,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({}, { status: 200 });
   } catch (error) {
-    console.error("Error creating order", {
-      email: email,
-      data: { error },
-    });
     return NextResponse.json(
-      { error: "Error creating order" },
+      { error: "User could not be verified" },
       { status: 500 }
     );
   }
