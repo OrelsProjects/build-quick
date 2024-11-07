@@ -10,33 +10,59 @@ import {
 } from "@/components/ui/tooltip"; // Adjust path as necessary
 import { Undo2, Check } from "lucide-react"; // Example icons, replace with your own
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function NavigationBar({
   templateName,
 }: {
   templateName: string;
 }) {
+  const [opacitated, setOpacitated] = React.useState(false);
+  const [didHover, setDidHover] = React.useState(false);
+
   return (
     <TooltipProvider delayDuration={50}>
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{
+          duration: 0.5,
+          delay: 0.5,
+          type: "spring",
+          damping: 15,
+          stiffness: 250,
+        }}
         viewport={{ once: true }}
-        className="fixed bottom-10 inset-x-0 mx-auto rounded-full shadow-xl border bg-gray-700 border-gray-200 w-fit h-fit py-2 px-4 z-50 flex space-x-4"
+        onAnimationComplete={() => setOpacitated(true)}
+        onHoverStart={() => {
+          setDidHover(true);
+          setOpacitated(false);
+        }}
+        onHoverEnd={() => {
+          setTimeout(() => {
+            setOpacitated(true);
+          }, 100);
+        }}
+        className={cn(
+          "fixed bottom-10 inset-x-0 mx-auto rounded-full shadow-md border bg-gray-600 border-gray-200 w-fit h-fit py-2 px-4 z-50 flex space-x-8 transition-colors duration-150",
+          {
+            "bg-opacity-50": opacitated && didHover,
+          }
+        )}
       >
         <Tooltip>
           <TooltipTrigger asChild>
             <motion.div
-              initial={{ y: 30 }}
-              animate={{ y: 0 }}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
               transition={{
                 type: "spring",
                 stiffness: 200,
                 damping: 15,
-                delay: 0.1,
+                delay: 0.6,
+                duration: 1,
               }}
-              className="flex items-center space-x-2 px-1 py-1 rounded-full hover:shadow-md transition-shadow"
+              className="flex items-center space-x-2 px-1 py-1 rounded-full transition-shadow opacity-20"
             >
               <Link
                 href="/gallery"
@@ -55,15 +81,16 @@ export default function NavigationBar({
         <Tooltip>
           <TooltipTrigger asChild>
             <motion.div
-              initial={{ y: 30 }}
-              animate={{ y: 0 }}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
               transition={{
                 type: "spring",
                 stiffness: 200,
                 damping: 15,
-                delay: 0.2,
+                delay: 0.9,
+                duration: 1,
               }}
-              className="flex items-center space-x-2 px-3 py-2 rounded-full hover:shadow-md transition-shadow"
+              className="flex items-center space-x-2 px-3 py-2 rounded-full transition-shadow"
             >
               <Link
                 href={

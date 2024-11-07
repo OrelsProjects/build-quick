@@ -1,51 +1,46 @@
-"use client";
+'use client'
 
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MessageSquare, Clock, Zap, BarChart } from "lucide-react";
-import Image from "next/image";
+import { motion } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { MessageSquare, Clock, Zap, BarChart } from "lucide-react"
+import Link from "next/link"
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6 },
-};
+}
+
+const AnimatedLogo = () => (
+  <svg width="150" height="40" viewBox="0 0 150 40" className="w-auto h-8">
+    <rect width="40" height="40" rx="8" fill="#3B82F6" className="animate-pulse" />
+    <text x="50" y="28" fontSize="24" fontWeight="bold" fill="#1F2937">MacroSys</text>
+  </svg>
+)
 
 export default function SocialProofGenerator() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <Image
-            src="/placeholder.svg"
-            alt="Logo"
-            width={150}
-            height={40}
-            className="w-auto h-8"
-          />
+          <AnimatedLogo />
           <nav>
             <ul className="flex space-x-6">
               <li>
-                <a
-                  href="#features"
-                  className="text-blue-600 hover:text-blue-800"
-                >
+                <Link href="#features" className="text-blue-600 hover:text-blue-800">
                   Features
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#how-it-works"
-                  className="text-blue-600 hover:text-blue-800"
-                >
+                <Link href="#how-it-works" className="text-blue-600 hover:text-blue-800">
                   How It Works
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#demo" className="text-blue-600 hover:text-blue-800">
+                <Link href="#demo" className="text-blue-600 hover:text-blue-800">
                   Request Demo
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
@@ -205,13 +200,9 @@ export default function SocialProofGenerator() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <Image
-                  src="/placeholder.svg"
-                  alt="Product Demo"
-                  width={600}
-                  height={400}
-                  className="rounded-lg shadow-lg"
-                />
+                <div className="w-full h-[400px] bg-gray-200 rounded-lg shadow-lg flex items-center justify-center">
+                  <span className="text-2xl text-gray-500">Demo Video Placeholder</span>
+                </div>
               </motion.div>
             </div>
           </div>
@@ -256,14 +247,8 @@ export default function SocialProofGenerator() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <Image
-                src="/placeholder.svg"
-                alt="Logo"
-                width={120}
-                height={30}
-                className="w-auto h-6 mb-4"
-              />
-              <p className="text-gray-400">
+              <AnimatedLogo />
+              <p className="text-gray-400 mt-4">
                 Empowering support teams with efficient macro systems.
               </p>
             </div>
@@ -271,25 +256,19 @@ export default function SocialProofGenerator() {
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
-                  <a
-                    href="#features"
-                    className="text-gray-400 hover:text-white"
-                  >
+                  <Link href="#features" className="text-gray-400 hover:text-white">
                     Features
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#how-it-works"
-                    className="text-gray-400 hover:text-white"
-                  >
+                  <Link href="#how-it-works" className="text-gray-400 hover:text-white">
                     How It Works
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#demo" className="text-gray-400 hover:text-white">
+                  <Link href="#demo" className="text-gray-400 hover:text-white">
                     Request Demo
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -308,5 +287,5 @@ export default function SocialProofGenerator() {
         </div>
       </footer>
     </div>
-  );
+  )
 }

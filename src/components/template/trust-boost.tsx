@@ -1,15 +1,38 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { ChevronRight, CheckCircle, Globe, Sliders, Code } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ChevronRight,
+  CheckCircle,
+  Globe,
+  Sliders,
+  Code,
+  Settings,
+  Layout,
+  Eye,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { AvatarIcon } from "@radix-ui/react-icons";
+
+type Theme = "light" | "dark";
 
 export default function TrustBoost() {
   const [email, setEmail] = useState("");
+  const [widgetType, setWidgetType] = useState("recent-sales");
+  const [showAvatar, setShowAvatar] = useState(true);
+  const [theme, setTheme] = useState<Theme>("light");
 
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
@@ -17,6 +40,25 @@ export default function TrustBoost() {
     transition: { duration: 0.6 },
   };
 
+  const fadeIn = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+  };
+
+  // Custom styles for light and dark modes
+  const widgetStyles = {
+    light: {
+      container: "bg-white text-black",
+      preview: "bg-gray-100 text-black",
+      avatar: "bg-gray-300",
+    },
+    dark: {
+      container: "bg-blue-800 text-gray-300",
+      preview: "bg-blue-600 text-white",
+      avatar: "bg-gray-700",
+    },
+  };
   return (
     <div className="min-h-screen bg-indigo-900 text-gray-200">
       {/* Header */}
@@ -139,6 +181,8 @@ export default function TrustBoost() {
       </section>
 
       {/* How It Works */}
+
+      {/* Widget Customization Section */}
       <section id="how-it-works" className="bg-indigo-800 py-20">
         <div className="container mx-auto">
           <motion.h2
@@ -162,20 +206,86 @@ export default function TrustBoost() {
                 </div>
               ))}
             </motion.div>
-            <motion.div {...fadeInUp} className="relative h-96">
-              <Image
-                src="/placeholder.svg?height=400&width=400"
-                alt="Widget customization interface"
-                fill
-                className="rounded-lg shadow-xl object-cover"
-              />
+            <motion.div
+              {...fadeInUp}
+              className={`p-6 rounded-lg shadow-xl ${widgetStyles[theme].container}`}
+            >
+              <h3 className="text-2xl font-semibold mb-4">
+                Widget Customization
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="widget-type">Widget Type</Label>
+                  <Select value={widgetType} onValueChange={setWidgetType}>
+                    <SelectTrigger id="widget-type" className="w-full">
+                      <SelectValue placeholder="Select widget type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="recent-sales">Recent Sales</SelectItem>
+                      <SelectItem value="visitor-count">
+                        Visitor Count
+                      </SelectItem>
+                      <SelectItem value="testimonials">Testimonials</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="show-avatar">Show Avatar</Label>
+                  <Switch
+                    id="show-avatar"
+                    checked={showAvatar}
+                    onCheckedChange={setShowAvatar}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="theme">Theme</Label>
+                  <Select
+                    value={theme}
+                    onValueChange={(value) => {
+                      if (value === "light" || value === "dark") {
+                        setTheme(value);
+                      }
+                    }}
+                  >
+                    <SelectTrigger id="theme" className="w-full">
+                      <SelectValue placeholder="Select theme" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="light">Light</SelectItem>
+                      <SelectItem value="dark">Dark</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div
+                className={`mt-6 p-4 rounded-lg ${widgetStyles[theme].preview}`}
+              >
+                <h4 className="text-lg font-semibold mb-2">Preview</h4>
+                <div className="flex items-center space-x-3 text-sm">
+                  <AnimatePresence>
+                    {showAvatar && (
+                      <motion.div
+                        {...fadeIn}
+                        key="avatar"
+                        className={`w-8 h-8 rounded-full flex items-center justify-center ${widgetStyles[theme].avatar}`}
+                      >
+                        <AvatarIcon className="w-6 h-6 mx-auto" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  <div>
+                    <p>John D. just purchased</p>
+                    <p className="text-green-400">Premium Package</p>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="container mx-auto py-20">
+      <section id="testimonials" className="container mx-auto py-20 pb-36">
         <motion.h2
           {...fadeInUp}
           className="text-4xl font-bold text-center mb-12 text-white"
@@ -230,7 +340,7 @@ export default function TrustBoost() {
         className="fixed bottom-0 left-0 right-0 bg-green-400 py-4"
       >
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-indigo font-bold">
+          <div className="text-indigo-900 font-bold">
             Ready to boost your conversions?
           </div>
           <Button className="bg-indigo-900 text-green-400 hover:bg-indigo-800">
