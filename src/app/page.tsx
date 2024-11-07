@@ -484,12 +484,18 @@ export default function Component() {
           © 2023 Project Starter. All rights reserved.
         </p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <a className="text-xs hover:underline underline-offset-4" href="#">
+          <Link
+            className="text-xs hover:underline underline-offset-4"
+            href="/tos"
+          >
             Terms of Service
-          </a>
-          <a className="text-xs hover:underline underline-offset-4" href="#">
+          </Link>
+          <Link
+            className="text-xs hover:underline underline-offset-4"
+            href="/privacy"
+          >
             Privacy
-          </a>
+          </Link>
         </nav>
       </footer>
     </div>
