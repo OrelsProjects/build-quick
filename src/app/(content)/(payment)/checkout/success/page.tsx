@@ -43,6 +43,8 @@ export default function PurchaseConfirmationPage() {
       router.push("/404");
     }
 
+    console.log("about to verify user payment");
+
     verifyUserPayment(email)
       .then(() => {
         setUserVerified(true);

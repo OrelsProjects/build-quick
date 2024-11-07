@@ -84,6 +84,7 @@ export default function usePayments() {
 
   const verifyUserPayment = async (email: string) => {
     try {
+      console.log("Verifying user payment", { email });
       await axios.post(`/api/order/verify`, { email });
     } catch (error: any) {
       console.error("Error verifying user payment", { error });
