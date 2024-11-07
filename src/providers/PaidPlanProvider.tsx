@@ -7,10 +7,12 @@ import usePayments from "../lib/hooks/usePayments";
 import { useCustomRouter } from "../lib/hooks/useCustomRouter";
 
 export default function PaidPlanProvider() {
-  const { verifyUserPayment } = usePayments();
+  const searchParams = useSearchParams();
   const router = useCustomRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+
+  const { verifyUserPayment } = usePayments();
+
   const [openPaidPlan, setOpenPaidPlan] = useState(false);
 
   useEffect(() => {}, [searchParams]);
@@ -30,16 +32,20 @@ export default function PaidPlanProvider() {
         });
       })
       .catch(() => {});
-  }, [pathname]);
+  }, [pathname, searchParams]);
 
   const email = useMemo(() => {
     const encodedEmail = searchParams.get("to");
     if (!encodedEmail) return null;
     return decodeURIComponent(encodedEmail);
-  }, [searchParams]);
+  }, [pathname, searchParams]);
 
   const handleClose = (open: boolean) => {
     if (open) return;
+    const wasCalledFromGenerate = pathname.includes("generate");
+    if (wasCalledFromGenerate) {
+      router.back();
+    }
     setOpenPaidPlan(false);
   };
 

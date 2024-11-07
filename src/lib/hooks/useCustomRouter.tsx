@@ -19,9 +19,11 @@ export function useCustomRouter() {
     options?: NavigateOptions
   ) => {
     // If relative URL, prepend the current origin
-    const baseUrl = href.startsWith("http") ? href : `${window.location.origin}${href}`;
+    const baseUrl = href.startsWith("http")
+      ? href
+      : `${window.location.origin}${href}`;
     const url = new URL(baseUrl);
-  
+
     if (routerOptions?.preserveQuery) {
       searchParams.forEach((val, key) => {
         if (!url.searchParams.has(key)) {
@@ -29,29 +31,30 @@ export function useCustomRouter() {
         }
       });
     }
-  
+
     if (routerOptions?.paramsToRemove) {
       routerOptions.paramsToRemove.forEach((key) => {
         url.searchParams.delete(key);
       });
     }
-  
+
     if (routerOptions?.paramsToAdd) {
       Object.entries(routerOptions.paramsToAdd).forEach(([key, val]) => {
-        url.searchParams.set(key, val); // Use set to ensure updated values replace old ones
+        if (val) {
+          url.searchParams.set(key, val); // Use set to ensure updated values replace old ones
+        }
       });
     }
-  
+
     let urlString = url.toString();
-  
+
     // If the href argument was relative, revert it back to relative for router.push
     if (!href.startsWith("http")) {
       urlString = url.pathname + url.search;
     }
-  
+
     router.push(urlString, options);
   };
-  
 
   return { ...router, push };
 }

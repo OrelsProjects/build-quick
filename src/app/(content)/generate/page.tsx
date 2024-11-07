@@ -38,6 +38,7 @@ import axios from "axios";
 import { ProductRequest } from "@prisma/client";
 import { object, string } from "yup";
 import PaymentSideBar from "../../../components/paymentSideBar";
+import usePayments from "../../../lib/hooks/usePayments";
 
 const STORAGE_KEY_IDEA = "build-quick-idea";
 const STORAGE_KEY_PROMPT = "build-quick-prompt";
@@ -93,6 +94,7 @@ export default function GeneratePage() {
   const router = useCustomRouter();
   const pathname = usePathname();
   const params = useSearchParams();
+  const { showRepositoryPaymentSideBar } = usePayments();
 
   const [stage, setStage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -247,10 +249,7 @@ export default function GeneratePage() {
     // check if email is inserted correctly
     try {
       await schema.validate(formik.values);
-      router.push(pathname, {
-        preserveQuery: true,
-        paramsToAdd: { "get-repository": "true" },
-      });
+      showRepositoryPaymentSideBar(formik.values.email);
     } catch (error: any) {
       formik.setErrors({ email: error.message });
     }
@@ -347,6 +346,7 @@ export default function GeneratePage() {
             template={selectedTemplate || ""}
             size="small"
             className="flex-shrink-0"
+            openInNewTab
           />
           <motion.div
             className="w-full h-full max-h-40 flex flex-col text-gray-600 gap-1 font-sans text-center md:text-start"
@@ -504,13 +504,13 @@ export default function GeneratePage() {
         </DialogContent>
       </Dialog>
 
-      {formik.values.email && (
+      {/* {formik.values.email && (
         <PaymentSideBar
           email={formik.values.email}
           open={showRepositoryPurchase}
           onOpenChange={handleRepositoryClose}
         />
-      )}
+      )} */}
     </div>
   );
 }

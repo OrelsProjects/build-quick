@@ -12,9 +12,9 @@ import {
 import { CheckCircle, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "../lib/utils";
-import Link from "next/link";
 import { useCustomRouter } from "../lib/hooks/useCustomRouter";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 export interface PaymentSideBarProps {
   open: boolean;
@@ -44,8 +44,10 @@ export default function PaymentSideBar({
   email,
   onOpenChange,
 }: PaymentSideBarProps) {
+  
   const router = useCustomRouter();
   const pathname = usePathname();
+  const [routingToCheckout, setRoutingToCheckout] = useState(false);
 
   const FullRefund = ({ className }: { className?: string }) => (
     <motion.p
@@ -60,7 +62,7 @@ export default function PaymentSideBar({
   );
 
   const onGetEarlyAccess = () => {
-    onOpenChange(false);
+    setRoutingToCheckout(true);
     router.push("/checkout", {
       preserveQuery: false,
       paramsToAdd: email ? { to: email } : undefined,
@@ -69,7 +71,8 @@ export default function PaymentSideBar({
 
   const handleOpenChange = (open: boolean) => {
     onOpenChange(open);
-    if (!open) {
+
+    if (!open && !routingToCheckout) {
       router.push(pathname, { preserveQuery: false });
     }
   };

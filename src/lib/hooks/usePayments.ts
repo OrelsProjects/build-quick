@@ -1,8 +1,26 @@
 import axios from "axios";
-import { OnApproveData, PayPalCapture, SubscriptionId } from "@/models/payment";
+import { PayPalCapture } from "@/models/payment";
 import { Product } from "@prisma/client";
+import { useCustomRouter } from "./useCustomRouter";
+import { usePathname } from "next/navigation";
 
 export default function usePayments() {
+  const router = useCustomRouter();
+  const pathname = usePathname();
+
+  const showRepositoryPaymentSideBar = (email?: string) => {
+    let paramsToAdd = {
+      repository: "true",
+      to: email || "",
+    };
+
+    router.push(pathname, {
+      preserveQuery: true,
+      paramsToRemove: ["to", "repository"],
+      paramsToAdd,
+    });
+  };
+
   const createOrder = async (itemId: string, email: string) => {
     try {
       const result = await axios.post("/api/order", {
@@ -79,5 +97,6 @@ export default function usePayments() {
     createOrder,
     getOrder,
     verifyUserPayment,
+    showRepositoryPaymentSideBar,
   };
 }

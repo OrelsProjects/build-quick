@@ -31,11 +31,13 @@ export interface TemplateContainerProps {
   template: Template | TemplateRouter;
   className?: string;
   size?: "default" | "small";
+  openInNewTab?: boolean;
 }
 
 export default function TemplateContainer({
   template,
   className,
+  openInNewTab,
   size = "default",
 }: TemplateContainerProps) {
   const templateObject = useMemo(() => {
@@ -53,6 +55,7 @@ export default function TemplateContainer({
             <Link
               className="w-full h-full md:hover:cursor-pointer transition-transform duration-300 hover:scale-105"
               href={`/template/${templateObject.id}`}
+              target={openInNewTab ? "_blank" : undefined}
             >
               <Image
                 src={templateObject.image}
