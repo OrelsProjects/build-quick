@@ -4,6 +4,7 @@ import prisma from "@/app/api/_db/db";
 export async function POST(req: NextRequest) {
   const { email }: { email: string } = await req.json();
 
+  
   try {
     const userOrder = await prisma.userOrders.findFirst({
       where: {
