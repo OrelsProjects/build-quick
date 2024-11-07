@@ -110,7 +110,6 @@ export default function GeneratePage() {
     },
     enableReinitialize: true,
     onSubmit: async (values: Idea) => {
-      debugger;
       const idea = { ...values };
       const id = saveIdea(values);
       formik.setValues({ ...idea, id });
@@ -180,7 +179,6 @@ export default function GeneratePage() {
   useEffect(() => {
     const stageString = params.get("stage");
     const stage = parseInt(stageString || "1", 10);
-    debugger;
     if (formik.values.ideaName === "") {
       updateStage(1);
     } else if (formik.values.elevatorPitch === "") {
@@ -313,7 +311,7 @@ export default function GeneratePage() {
 
       <form
         onSubmit={formik.handleSubmit}
-        className="space-y-4 z-10 w-full max-w-xl"
+        className="space-y-8 md:space-y-4 z-10 w-full max-w-xl py-6"
       >
         <motion.div key="back" {...fadeInOut}>
           <Button
@@ -341,13 +339,37 @@ export default function GeneratePage() {
           </Button>
         </motion.div>
 
-        <TemplateContainer template={selectedTemplate || ""} size="small" />
-        <div className="min-h-[270px] flex flex-col gap-3 justify-center">
+        <motion.div
+          className="w-full max-h-40 flex flex-row items-start justify-start gap-4"
+          {...fadeInOut}
+        >
+          <TemplateContainer
+            template={selectedTemplate || ""}
+            size="small"
+            className="flex-shrink-0"
+          />
+          <motion.div
+            className="w-full h-full max-h-40 flex flex-col text-gray-600 gap-1 font-sans text-center md:text-start"
+            {...fadeInOut}
+          >
+            {formik.values.ideaName && stage > 1 && (
+              <h3 className="text-2xl font-light text-start">
+                {formik.values.ideaName}
+              </h3>
+            )}
+            {formik.values.elevatorPitch && stage > 2 && (
+              <p className="text-base text-start overflow-auto font-extralight pr-1.5">
+                {formik.values.elevatorPitch}
+              </p>
+            )}
+          </motion.div>
+        </motion.div>
+        <div className="min-h-[270px] flex flex-col gap-3 items-start justify-start pt-8 md:pt-0 md:justify-center">
           <AnimatePresence mode="wait">
             {stage === 1 && (
               <motion.div
                 key="stage1"
-                className="w-full flex flex-col "
+                className="w-full flex flex-col"
                 {...fadeInOut}
               >
                 <h2 className="text-2xl md:text-4xl font-bold mb-4">
@@ -366,7 +388,7 @@ export default function GeneratePage() {
               </motion.div>
             )}
             {stage === 2 && (
-              <motion.div key="stage2" {...fadeInOut}>
+              <motion.div key="stage2" {...fadeInOut} className="w-full">
                 <h2 className="text-2xl font-bold mb-4">
                   What&apos;s your elevator pitch?
                 </h2>
@@ -432,7 +454,7 @@ export default function GeneratePage() {
             )}
           </AnimatePresence>
 
-          {!submissionComplete && stage < 3 && (
+          {stage < 3 && (
             <Button
               type="submit"
               className="w-full"

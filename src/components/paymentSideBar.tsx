@@ -42,7 +42,6 @@ export default function PaymentSideBar({
   email,
   onOpenChange,
 }: PaymentSideBarProps) {
-  console.log("open", open);
   const FullRefund = ({ className }: { className?: string }) => (
     <motion.p
       initial={{ opacity: 0, y: 20 }}
@@ -84,7 +83,7 @@ export default function PaymentSideBar({
                   transition={{ delay: 0.1 * (index + 1) }}
                   className="flex items-center space-x-2"
                 >
-                  <CheckCircle className="text-green-500" size={20} />
+                  <CheckCircle className="text-green-500 flex-shrink-0" size={20} />
                   <span>{feature}</span>
                 </motion.li>
               ))}
@@ -105,7 +104,7 @@ export default function PaymentSideBar({
                   transition={{ delay: index === 0 ? 1.6 : 1 * (index + 1) }}
                   className="flex items-center space-x-2"
                 >
-                  <CheckCircle className="text-green-500" size={20} />
+                  <CheckCircle className="text-green-500 flex-shrink-0" size={20} />
                   <span>{feature}</span>
                 </motion.li>
               ))}
@@ -160,7 +159,12 @@ export default function PaymentSideBar({
                 className="w-full bg-white text-blue-600 hover:bg-blue-50 transition-all duration-300 text-lg font-semibold py-6"
                 asChild
               >
-                <Link href={`/checkout/${email ? `?to=${email}` : ""}`}>
+                <Link
+                  href={`/checkout/${email ? `?to=${email}` : ""}`}
+                  onClick={() => {
+                    onOpenChange(false);
+                  }}
+                >
                   Get Early Access Now
                 </Link>
               </Button>

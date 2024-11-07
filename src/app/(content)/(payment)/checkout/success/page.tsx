@@ -65,7 +65,7 @@ export default function PurchaseConfirmationPage() {
   return (
     <div
       className={cn(
-        "min-h-screen bg-gray-50 flex items-center justify-center p-4",
+        "min-h-screen  bg-gray-50 flex flex-col gap-4 items-center justify-center p-4",
         inter.className
       )}
     >
@@ -74,31 +74,30 @@ export default function PurchaseConfirmationPage() {
           src="/celebration.lottie"
           autoplay
           loop={false}
-          className="absolute inset-0 !w-full !h-full mx-auto mb-4 z-0"
+          className="absolute inset-0 !w-full !h-full mx-auto mb-4 z-20"
         />
         <CardHeader>
-          <CardTitle className="text-3xl font-bold">Congratulations!</CardTitle>
+          <CardTitle className="text-3xl font-bold">You&apos;re all set!</CardTitle>
         </CardHeader>
         <CardContent className="relative z-10">
-          <p className="text-xl mb-4">Your purchase was successful!</p>
+          <p className="text-xl mb-4">Your purchase went through smoothly!</p>
           <p className="text-gray-600 mb-6">
             We&apos;ve sent a confirmation email to <strong>{email}</strong>.
-            Please check your inbox for further instructions.
+            Head over to your inbox for all the juicy details.
           </p>
           <div
-            className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6"
+            className="bg-sky-100 border-l-4 border-sky-300 text-sky-700 p-4 mb-6 max-w-md z-0 rounded-md"
             role="alert"
           >
-            <p className="font-bold">Important:</p>
+            <p className="font-bold">Quick Tip:</p>
             <p>
-              If you don&apos;t see the email in your inbox, please check your
-              spam folder.
+              Emails sometimes play hide-and-seek—if you don&apos;t spot ours in your inbox, be sure to check your spam or junk folder!
             </p>
           </div>
         </CardContent>
         <CardFooter className="relative flex justify-center z-20">
           <Button onClick={() => (window.location.href = "/")}>
-            Return to Home
+            Back to Home
           </Button>
         </CardFooter>
       </Card>

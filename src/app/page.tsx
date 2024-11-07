@@ -133,16 +133,16 @@ export default function Component() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                       >
-                        <Card>
-                          <CardHeader>
-                            <CardTitle>
+                        <Card className="min-h-[8.5rem]">
+                          <CardHeader className="pb-2">
+                            <CardTitle className="md:text-xl">
                               {step === 1 && "1. Choose Template"}
                               {step === 2 && "2. Describe Your Idea"}
                               {step === 3 && "3. Generate & Download"}
                             </CardTitle>
                           </CardHeader>
                           <CardContent>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                            <p className="text-sm md:text-base text-gray-500 dark:text-gray-400">
                               {step === 1 &&
                                 "Select from our curated collection of landing page templates."}
                               {step === 2 &&
@@ -191,8 +191,8 @@ export default function Component() {
                   transition={{ duration: 0.5 }}
                 >
                   <Card className="h-full">
-                    <CardHeader>
-                      <Code className="h-8 w-8 mb-2" />
+                    <CardHeader className="pb-2">
+                      <Code className="h-8 w-8 mb-4 mx-auto" />
                       <CardTitle>TypeScript</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -212,8 +212,8 @@ export default function Component() {
                   transition={{ duration: 0.5 }}
                 >
                   <Card className="h-full">
-                    <CardHeader>
-                      <Rocket className="h-8 w-8 mb-2" />
+                    <CardHeader className="pb-2">
+                      <Rocket className="h-8 w-8 mb-4 mx-auto" />
                       <CardTitle>React & Next.js</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -233,9 +233,9 @@ export default function Component() {
                   transition={{ duration: 0.5 }}
                 >
                   <Card className="h-full">
-                    <CardHeader>
+                    <CardHeader className="pb-2">
                       <svg
-                        className="h-8 w-8 mb-2"
+                        className="h-8 w-8 mb-4 mx-auto"
                         viewBox="0 0 24 24"
                         fill="currentColor"
                       >
@@ -260,8 +260,8 @@ export default function Component() {
                   transition={{ duration: 0.5 }}
                 >
                   <Card className="h-full">
-                    <CardHeader>
-                      <Move3D className="h-8 w-8 mb-2" />
+                    <CardHeader className="pb-2">
+                      <Move3D className="h-8 w-8 mb-4 mx-auto" />
                       <CardTitle>Framer Motion</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -281,9 +281,9 @@ export default function Component() {
                   transition={{ duration: 0.5 }}
                 >
                   <Card className="h-full">
-                    <CardHeader>
+                    <CardHeader className="pb-2">
                       <svg
-                        className="h-8 w-8 mb-2"
+                        className="h-8 w-8 mb-4 mx-auto"
                         viewBox="0 0 24 24"
                         fill="currentColor"
                       >
@@ -309,8 +309,8 @@ export default function Component() {
                   transition={{ duration: 0.5 }}
                 >
                   <Card className="h-full">
-                    <CardHeader>
-                      <Layers className="h-8 w-8 mb-2" />
+                    <CardHeader className="pb-2">
+                      <Layers className="h-8 w-8 mb-4 mx-auto" />
                       <CardTitle>Prisma</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -330,8 +330,8 @@ export default function Component() {
                   transition={{ duration: 0.5 }}
                 >
                   <Card className="h-full">
-                    <CardHeader>
-                      <Server className="h-8 w-8 mb-2" />
+                    <CardHeader className="pb-2">
+                      <Server className="h-8 w-8 mb-4 mx-auto" />
                       <CardTitle>Supabase or MongoDB</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -350,8 +350,8 @@ export default function Component() {
                   transition={{ duration: 0.5 }}
                 >
                   <Card className="h-full">
-                    <CardHeader>
-                      <CreditCard className="h-8 w-8 mb-2" />
+                    <CardHeader className="pb-2">
+                      <CreditCard className="h-8 w-8 mb-4 mx-auto" />
                       <CardTitle>Payment</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -396,7 +396,7 @@ export default function Component() {
                     transition={{ duration: 0.5 }}
                   >
                     <Card className="aspect-[4/4]">
-                      <CardHeader>
+                      <CardHeader className="pb-2">
                         <CardTitle>{plan}</CardTitle>
                         <CardDescription>
                           {plan === "Basic" && "$19/month"}
@@ -421,7 +421,7 @@ export default function Component() {
             </motion.div>
           </div>
         </section> */}
-        <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32">
+        <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32 text-center bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
             <motion.div
               className="flex flex-col items-center justify-center space-y-4 text-center"

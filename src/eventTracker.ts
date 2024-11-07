@@ -11,9 +11,10 @@ interface Dict {
 }
 export const initEventTracker = () => {
   const env = process.env.NODE_ENV;
+  const isProduction = env === "production";
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_API_KEY ?? "", {
     api_host: process.env.NEXT_PUBLIC_POSTHOG_API_HOST ?? "",
-    disable_session_recording: env !== "production",
+    disable_session_recording: !isProduction,
   });
 };
 
