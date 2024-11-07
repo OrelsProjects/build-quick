@@ -94,7 +94,7 @@ export default function CheckoutPage() {
       .then(() => {
         router.push("/checkout/success", {
           preserveQuery: false,
-          paramsToAdd: { email },
+          paramsToAdd: { to: email },
         });
       })
       .catch(() => {});
@@ -116,7 +116,7 @@ export default function CheckoutPage() {
     } else {
       router.push("/checkout/success", {
         preserveQuery: false,
-        paramsToAdd: { email },
+        paramsToAdd: { to: email },
       });
     }
   };

@@ -28,7 +28,7 @@ export default function PaidPlanProvider() {
         setOpenPaidPlan(false);
         router.push("/checkout/success", {
           preserveQuery: false,
-          paramsToAdd: { email },
+          paramsToAdd: { to: email },
         });
       })
       .catch(() => {});
