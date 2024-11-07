@@ -61,7 +61,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="antialiased max-h-svh">
         <Suspense>
           <div className="relative z-[51]">
             <toast.ToastContainer

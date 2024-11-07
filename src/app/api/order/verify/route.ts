@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createOrder } from "@/app/api/_utils/payments";
 import prisma from "@/app/api/_db/db";
 
 export async function POST(req: NextRequest) {
