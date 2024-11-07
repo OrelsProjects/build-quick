@@ -38,6 +38,7 @@ export default function PurchaseConfirmationPage() {
 
     const email = decodeURI(searchParams.get("email") || "");
     if (!email) {
+      console.log("No email found in query params");
       router.push("/404");
     }
 
@@ -77,7 +78,9 @@ export default function PurchaseConfirmationPage() {
           className="absolute inset-0 !w-full !h-full mx-auto mb-4 z-20"
         />
         <CardHeader>
-          <CardTitle className="text-3xl font-bold">You&apos;re all set!</CardTitle>
+          <CardTitle className="text-3xl font-bold">
+            You&apos;re all set!
+          </CardTitle>
         </CardHeader>
         <CardContent className="relative z-10">
           <p className="text-xl mb-4">Your purchase went through smoothly!</p>
@@ -91,7 +94,8 @@ export default function PurchaseConfirmationPage() {
           >
             <p className="font-bold">Quick Tip:</p>
             <p>
-              Emails sometimes play hide-and-seek—if you don&apos;t spot ours in your inbox, be sure to check your spam or junk folder!
+              Emails sometimes play hide-and-seek—if you don&apos;t spot ours in
+              your inbox, be sure to check your spam or junk folder!
             </p>
           </div>
         </CardContent>
