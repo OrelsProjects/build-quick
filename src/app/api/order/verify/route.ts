@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (!userOrder || userOrder.status !== "COMPLETED") {
-      return NextResponse.json({ error: "Order not found" }, { status: 404 });
+      return NextResponse.json({ error: `User order not found ${email}` }, { status: 405 });
     }
 
     return NextResponse.json({}, { status: 200 });
