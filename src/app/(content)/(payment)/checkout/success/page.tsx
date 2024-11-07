@@ -14,7 +14,7 @@ import {
 import { inter } from "@/lib/fontUtils";
 import { cn } from "@/lib/utils";
 import usePayments from "@/lib/hooks/usePayments";
-import { useCustomRouter } from "../../../../../lib/hooks/useCustomRouter";
+import { useCustomRouter } from "@/lib/hooks/useCustomRouter";
 import { Loader2 } from "lucide-react";
 
 export default function PurchaseConfirmationPage() {
@@ -27,7 +27,7 @@ export default function PurchaseConfirmationPage() {
   const [userVerified, setUserVerified] = useState(false);
 
   const email = useMemo(
-    () => decodeURI(searchParams.get("email") || ""),
+    () => decodeURI(searchParams.get("to") || ""),
     [searchParams]
   );
 
