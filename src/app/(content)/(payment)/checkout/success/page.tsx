@@ -36,7 +36,8 @@ export default function PurchaseConfirmationPage() {
     loading.current = true;
     setIsLoading(true);
 
-    const email = decodeURI(searchParams.get("email") || "");
+    const email = decodeURI(searchParams.get("to") || "");
+    console.log("Email", email);
     if (!email) {
       console.log("No email found in query params");
       router.push("/404");
