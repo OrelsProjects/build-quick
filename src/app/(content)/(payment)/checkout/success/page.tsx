@@ -50,7 +50,8 @@ export default function PurchaseConfirmationPage() {
         setUserVerified(true);
       })
       .catch(() => {
-        router.push("/404");
+        // router.push("/404");
+        console.log("Error verifying user payment");
       })
       .finally(() => {
         loading.current = false;
