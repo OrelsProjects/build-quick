@@ -148,7 +148,7 @@ export default function ProductivityPro() {
                             <Clock className="mr-2 h-4 w-4" /> Switch Task
                           </Button>
                           <Button className="w-full justify-start" variant="ghost">
-                            <BarChart2 className="mr-2 h-4 w-4" /> View Today's Summary
+                            <BarChart2 className="mr-2 h-4 w-4" /> View Today&apos;s Summary
                           </Button>
                         </div>
                       </div>
@@ -292,7 +292,7 @@ export default function ProductivityPro() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="flex flex-col items-center space-y-4 text-center text-white">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Ready to Boost Your Team's Productivity?</h2>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Ready to Boost Your Team&apos;s Productivity?</h2>
               <p className="mx-auto max-w-[600px] text-white/90 md:text-xl">
                 Join thousands of businesses that have transformed their workflow with ProductivityPro.
               </p>

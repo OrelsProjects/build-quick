@@ -42,7 +42,7 @@ const TermsAndConditions: React.FC = () => {
           By using {COMPANY_NAME}, you agree to receive important product
           updates from {COMPANY_NAME} via the email linked with your Google
           account or the email you used to register your account. You can
-          opt-out of these product updates anytime by clicking the "Unsubscribe"
+          opt-out of these product updates anytime by clicking the &quot;Unsubscribe&quot;
           link at the bottom of each email. We only send important product
           updates.
         </p>
@@ -73,7 +73,7 @@ const TermsAndConditions: React.FC = () => {
           representation (unless fraudulent), or any implied warranty,
           condition, or other term, or any duty at common law, for any loss of
           profit or any indirect, special, or consequential loss, damage, costs,
-          expenses, or other claims (whether caused by {COMPANY_NAME}'s
+          expenses, or other claims (whether caused by {COMPANY_NAME}&apos;s
           negligence or the negligence of its servants or agents or otherwise)
           which arise out of or in connection with the provision of any goods or
           services by {COMPANY_NAME}. {COMPANY_NAME} shall not be liable or
@@ -82,7 +82,7 @@ const TermsAndConditions: React.FC = () => {
           or failure was due to any cause beyond its reasonable control.
           Notwithstanding contrary clauses in this Agreement, in the event that{" "}
           {COMPANY_NAME} is deemed liable to you for breach of this Agreement,
-          you agree that {COMPANY_NAME}'s liability is limited to the amount
+          you agree that {COMPANY_NAME}&apos;s liability is limited to the amount
           actually paid by you for your services or software, which amount is
           calculated in reliance upon this clause. You hereby release{" "}
           {COMPANY_NAME} from any and all obligations, liabilities, and claims
