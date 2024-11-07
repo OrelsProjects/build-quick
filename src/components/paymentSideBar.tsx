@@ -13,6 +13,7 @@ import { CheckCircle, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "../lib/utils";
 import Link from "next/link";
+import { useCustomRouter } from "../lib/hooks/useCustomRouter";
 
 export interface PaymentSideBarProps {
   open: boolean;
@@ -42,6 +43,8 @@ export default function PaymentSideBar({
   email,
   onOpenChange,
 }: PaymentSideBarProps) {
+  const router = useCustomRouter();
+
   const FullRefund = ({ className }: { className?: string }) => (
     <motion.p
       initial={{ opacity: 0, y: 20 }}
@@ -54,11 +57,19 @@ export default function PaymentSideBar({
     </motion.p>
   );
 
+  const onGetEarlyAccess = () => {
+    onOpenChange(false);
+    router.push("/checkout", {
+      preserveQuery: false,
+      paramsToAdd: email ? { to: email } : undefined,
+    });
+  };
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="w-[400px] sm:w-6/12 sm:max-w-5xl overflow-auto scroll-"
+        className="w-[90%] sm:w-6/12 sm:max-w-1xl overflow-auto scroll-"
       >
         <SheetHeader>
           <SheetTitle>All-in-One React Project Package</SheetTitle>
@@ -81,9 +92,12 @@ export default function PaymentSideBar({
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 * (index + 1) }}
-                  className="flex items-center space-x-2"
+                  className="flex items-start md:items-center space-x-2"
                 >
-                  <CheckCircle className="text-green-500 flex-shrink-0" size={20} />
+                  <CheckCircle
+                    className="text-green-500 flex-shrink-0"
+                    size={20}
+                  />
                   <span>{feature}</span>
                 </motion.li>
               ))}
@@ -102,9 +116,12 @@ export default function PaymentSideBar({
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index === 0 ? 1.6 : 1 * (index + 1) }}
-                  className="flex items-center space-x-2"
+                  className="flex items-start md:items-center space-x-2"
                 >
-                  <CheckCircle className="text-green-500 flex-shrink-0" size={20} />
+                  <CheckCircle
+                    className="text-green-500 flex-shrink-0"
+                    size={20}
+                  />
                   <span>{feature}</span>
                 </motion.li>
               ))}
@@ -157,16 +174,9 @@ export default function PaymentSideBar({
               </div>
               <Button
                 className="w-full bg-white text-blue-600 hover:bg-blue-50 transition-all duration-300 text-lg font-semibold py-6"
-                asChild
+                onClick={onGetEarlyAccess}
               >
-                <Link
-                  href={`/checkout/${email ? `?to=${email}` : ""}`}
-                  onClick={() => {
-                    onOpenChange(false);
-                  }}
-                >
-                  Get Early Access Now
-                </Link>
+                Get Early Access Now
               </Button>
               {email && (
                 <p className="text-gray-300 text-xs mt-1">

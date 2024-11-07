@@ -12,7 +12,6 @@ export default function PaidPlanProvider() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [openPaidPlan, setOpenPaidPlan] = useState(false);
-  const [forcedClose, setForcedClose] = useState(false);
 
   useEffect(() => {}, [searchParams]);
 
@@ -31,7 +30,7 @@ export default function PaidPlanProvider() {
         });
       })
       .catch(() => {});
-  });
+  }, [pathname]);
 
   const email = useMemo(() => {
     const encodedEmail = searchParams.get("to");
@@ -41,17 +40,12 @@ export default function PaidPlanProvider() {
 
   const handleClose = (open: boolean) => {
     if (open) return;
-    router.push(pathname, {
-      preserveQuery: true,
-      paramsToRemove: ["repository", "to"],
-    });
     setOpenPaidPlan(false);
-    setForcedClose(true);
   };
 
   return (
     <PaymentSideBar
-      open={openPaidPlan && !forcedClose}
+      open={openPaidPlan}
       onOpenChange={handleClose}
       email={email || ""}
     />
