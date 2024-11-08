@@ -24,7 +24,6 @@ export default function PurchaseConfirmationPage() {
 
   const loading = useRef<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [userVerified, setUserVerified] = useState(false);
 
   const email = useMemo(
     () => decodeURI(searchParams.get("to") || ""),
@@ -43,11 +42,12 @@ export default function PurchaseConfirmationPage() {
     }
 
     verifyUserPayment(email)
-      .then(() => {
-        setUserVerified(true);
-      })
+      .then(() => {})
       .catch(() => {
-        router.push("/404");
+        router.push("/404", {
+          preserveQuery: true,
+          paramsToAdd: { checkout: "failed", to: email },
+        });
       })
       .finally(() => {
         loading.current = false;
