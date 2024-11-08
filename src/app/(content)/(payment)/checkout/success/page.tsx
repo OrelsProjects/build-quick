@@ -40,7 +40,7 @@ export default function PurchaseConfirmationPage() {
     console.log("Email", email);
     if (!email) {
       console.log("No email found in query params");
-      router.push("/404");
+      // router.push("/404");
     }
 
     console.log("about to verify user payment");
