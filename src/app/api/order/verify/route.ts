@@ -4,7 +4,7 @@ import prisma from "@/app/api/_db/db";
 export async function POST(req: NextRequest) {
   const body = await req.json();
   console.log("Creating user order", body);
-  const { email }: { email: string } = await req.json();
+  const { email } = body;
   console.log("Verifying user order", { email });
   try {
     const userOrder = await prisma.userOrders.findFirst({
