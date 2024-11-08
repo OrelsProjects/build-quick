@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/api/_db/db";
 
 export async function POST(req: NextRequest) {
+  const body = await req.json();
+  console.log("Creating user order", body);
   const { email }: { email: string } = await req.json();
   console.log("Verifying user order", { email });
   try {
