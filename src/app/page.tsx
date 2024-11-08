@@ -80,7 +80,7 @@ export default function Component() {
         <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32 xl:py-48">
           <div className="container px-4 md:px-6">
             <motion.div
-              className="flex flex-col leading items-center space-y-4 text-center"
+              className="flex flex-col items-center space-y-4 text-center"
               variants={textVariants}
               initial="hidden"
               whileInView="visible"
@@ -89,11 +89,11 @@ export default function Component() {
             >
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  Launch Your Project in Minutes
+                  Launch Your Landing Page & Validate Your Idea Fast
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Turn your idea into a fully functional web app with just a few
-                  clicks. No coding required.
+                  Receive a fully functioning repository tailored to your idea,
+                  ready for immediate use and customization.
                 </p>
               </div>
               <div className="space-x-4">
@@ -120,7 +120,7 @@ export default function Component() {
                     How It Works
                   </h2>
                   <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 mx-auto">
-                    Our simple process gets you from idea to launch in no time.
+                    Go from idea to a customizable codebase in minutes.
                   </p>
                 </div>
                 <div className="w-full max-w-full space-y-4 mx-auto">
@@ -138,18 +138,18 @@ export default function Component() {
                           <CardHeader className="pb-2">
                             <CardTitle className="md:text-xl">
                               {step === 1 && "1. Choose Template"}
-                              {step === 2 && "2. Describe Your Idea"}
-                              {step === 3 && "3. Generate & Download"}
+                              {step === 2 && "2. Provide Details"}
+                              {step === 3 && "3. Get Your Codebase"}
                             </CardTitle>
                           </CardHeader>
                           <CardContent>
                             <p className="text-sm md:text-base text-gray-500 dark:text-gray-400">
                               {step === 1 &&
-                                "Select from our curated collection of landing page templates."}
+                                "Select from various landing page templates optimized for idea validation."}
                               {step === 2 &&
                                 "Tell us about your core feature in 255 words or less."}
                               {step === 3 &&
-                                "We'll create your project and provide a download link."}
+                                "Receive a fully equipped code repository you can tweak and deploy on your own terms."}
                             </p>
                           </CardContent>
                         </Card>
@@ -174,11 +174,11 @@ export default function Component() {
             >
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Cutting-Edge Technologies
+                  Build with Cutting-Edge Technologies
                 </h2>
                 <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                  Your project will be built with the latest and most powerful
-                  web technologies.
+                  Ensure your landing page is fast, responsive, and reliable
+                  with the latest web technologies.
                 </p>
               </div>
               <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -198,8 +198,7 @@ export default function Component() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Fast, scalable, and SEO-friendly web apps with strong
-                        typing
+                        High performance and SEO-friendly frameworks.
                       </p>
                     </CardContent>
                   </Card>
@@ -227,7 +226,7 @@ export default function Component() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Utility-first CSS for rapid UI development
+                        Rapid styling with utility-first CSS.
                       </p>
                     </CardContent>
                   </Card>
@@ -247,7 +246,7 @@ export default function Component() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Smooth animations and interactive UI
+                        Create smooth, captivating animations.
                       </p>
                     </CardContent>
                   </Card>
@@ -275,7 +274,7 @@ export default function Component() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Beautiful, accessible UI components
+                        Modern, customizable UI components.
                       </p>
                     </CardContent>
                   </Card>
@@ -296,7 +295,7 @@ export default function Component() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Next-generation ORM for Node.js and TypeScript
+                        Advanced ORM for TypeScript and Node.js.
                       </p>
                     </CardContent>
                   </Card>
@@ -317,7 +316,7 @@ export default function Component() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Choose your preferred database solution
+                        Flexible, scalable database options.
                       </p>
                     </CardContent>
                   </Card>
@@ -338,7 +337,7 @@ export default function Component() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Send welcome and confirmation emails with MailGun
+                        Send emails with ease using MailGun.
                       </p>
                     </CardContent>
                   </Card>
@@ -354,11 +353,11 @@ export default function Component() {
                   <Card className="h-full">
                     <CardHeader className="pb-2">
                       <CreditCard className="h-8 w-8 mb-4 mx-auto" />
-                      <CardTitle>Payment</CardTitle>
+                      <CardTitle>Payment Integration</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Use PayPal for secure payments
+                        Accept payments securely with PayPal.
                       </p>
                     </CardContent>
                   </Card>
@@ -368,61 +367,6 @@ export default function Component() {
           </div>
         </section>
 
-        {/* Pricing Section */}
-        {/* <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <motion.div
-              className="flex flex-col items-center justify-center space-y-4 text-center"
-              variants={textVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Pricing Plans
-                </h2>
-                <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                  Choose a plan that suits your needs.
-                </p>
-              </div>
-              <div className="container grid gap-8 sm:grid-cols-2 md:grid-cols-3 px-28">
-                {["Basic", "Pro", "Enterprise"].map((plan) => (
-                  <motion.div
-                    key={plan}
-                    variants={cardVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Card className="aspect-[4/4]">
-                      <CardHeader className="pb-2">
-                        <CardTitle>{plan}</CardTitle>
-                        <CardDescription>
-                          {plan === "Basic" && "$19/month"}
-                          {plan === "Pro" && "$49/month"}
-                          {plan === "Enterprise" && "Custom Pricing"}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
-                          <li>Feature 1</li>
-                          <li>Feature 2</li>
-                          <li>Feature 3</li>
-                        </ul>
-                        <Button className="mt-4">
-                          {plan === "Enterprise" ? "Contact Us" : "Buy Now"}
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section> */}
         <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32 text-center bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
             <motion.div
@@ -435,47 +379,13 @@ export default function Component() {
             >
               <div className="space-y-4">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Ready to Get Started?
+                  Start Validating Your Idea Today
                 </h2>
                 <div className="space-x-4">
                   <Button asChild className="px-10 py-4 text-lg">
                     <Link href="/gallery">View Templates</Link>
                   </Button>
                 </div>
-                {/* <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                  Sign up now to be notified when we launch. Be among the first
-                  to create your perfect landing page.
-                </p>
-              </div>
-              <div className="w-full max-w-sm space-y-2">
-                <form
-                  onSubmit={handleSubmit}
-                  className="flex flex-col space-y-2"
-                >
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                  <Button type="submit" disabled={isLoading || isCompleted}>
-                    {isLoading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Please wait
-                      </>
-                    ) : isCompleted ? (
-                      <>
-                        <CheckCircle className="mr-2 h-4 w-4" />
-                        Subscribed
-                      </>
-                    ) : (
-                      "Notify Me"
-                    )}
-                  </Button>
-                </form>
-               */}
               </div>
             </motion.div>
           </div>
