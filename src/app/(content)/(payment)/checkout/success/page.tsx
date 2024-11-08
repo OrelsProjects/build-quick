@@ -39,19 +39,15 @@ export default function PurchaseConfirmationPage() {
     const email = decodeURI(searchParams.get("to") || "");
     console.log("Email", email);
     if (!email) {
-      console.log("No email found in query params");
-      // router.push("/404");
+      router.push("/");
     }
-
-    console.log("about to verify user payment");
 
     verifyUserPayment(email)
       .then(() => {
         setUserVerified(true);
       })
       .catch(() => {
-        // router.push("/404");
-        console.log("Error verifying user payment");
+        router.push("/404");
       })
       .finally(() => {
         loading.current = false;

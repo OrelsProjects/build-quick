@@ -4,19 +4,11 @@ import prisma from "@/app/api/_db/db";
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { email } = body;
-  console.log("Verifying user order", { email });
 
   try {
-    const allOrders = await prisma.userOrders.findMany({
-      select: {
-        email: true,
-        status: true,
-      },
-    });
-    console.log("All orders", allOrders);
     const userOrder = await prisma.userOrders.findFirst({
       where: {
-        email,
+        AND: [{ email }, { status: "COMPLETED" }],
       },
     });
 
