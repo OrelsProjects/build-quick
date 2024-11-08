@@ -16,22 +16,28 @@ import { useCustomRouter } from "../lib/hooks/useCustomRouter";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+export interface OpenChangeOptions {
+  avoidNavigation?: boolean;
+}
+
 export interface PaymentSideBarProps {
   open: boolean;
   email: string;
-  onOpenChange: (open: boolean) => void;
+  spotsLeft: number | null;
+  onOpenChange: (open: boolean, options?: OpenChangeOptions) => void;
 }
 
 export const features = [
   "React project with TypeScript and NextJS",
-  "TailwindCSS for styling",
-  "Prisma ORM",
-  "MongoDB/Supabase database",
   "NextAuth for authentication",
+  "TailwindCSS for styling",
+  "Beautiful UI using Shadcn components",
   "Framer Motion for animations",
   "PayPal integration for payments",
-  "Beautiful UI using Shadcn components",
+  "Prisma ORM",
+  "MongoDB/Supabase database",
   "Posthog for advanced analytics and session records",
+  "Mailgun for welcome emails",
 ];
 
 export const bonuses = [
@@ -43,8 +49,8 @@ export default function PaymentSideBar({
   open,
   email,
   onOpenChange,
+  spotsLeft,
 }: PaymentSideBarProps) {
-  
   const router = useCustomRouter();
   const pathname = usePathname();
   const [routingToCheckout, setRoutingToCheckout] = useState(false);
@@ -70,12 +76,14 @@ export default function PaymentSideBar({
   };
 
   const handleOpenChange = (open: boolean) => {
-    onOpenChange(open);
-
-    if (!open && !routingToCheckout) {
-      router.push(pathname, { preserveQuery: false });
+    onOpenChange(open, {
+      avoidNavigation: routingToCheckout,
+    });
+    if (!open) {
+      setRoutingToCheckout(false);
     }
   };
+
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetContent
@@ -156,7 +164,7 @@ export default function PaymentSideBar({
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5 * bonuses.length }}
+            transition={{ delay: 0 * bonuses.length }}
             className="space-y-2"
           >
             <div className="flex items-center justify-between">
@@ -184,10 +192,15 @@ export default function PaymentSideBar({
                 <p className="text-white text-4xl font-bold">$24.99</p>
               </div>
               <Button
-                className="w-full bg-white text-blue-600 hover:bg-blue-50 transition-all duration-300 text-lg font-semibold py-6"
+                className="w-full bg-white text-blue-600 hover:bg-blue-50 transition-all duration-300 text-sm md:text-lg font-semibold py-6"
                 onClick={onGetEarlyAccess}
               >
                 Get Early Access Now
+                {spotsLeft !== null && (
+                  <span className="text-xs text-gray-600 ml-0 md:ml-2">
+                    ({spotsLeft} spots left)
+                  </span>
+                )}
               </Button>
               {email && (
                 <p className="text-gray-300 text-xs mt-1">

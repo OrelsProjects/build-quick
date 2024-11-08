@@ -39,6 +39,7 @@ export async function generateLandingPage(
   templateCode: string,
   isFreeUser = true
 ): Promise<LandingPage | null> {
+  return null; // To avoid abuse of the API
   const selectedModel: Model = isFreeUser ? "gpt-4o-mini" : "gpt-4o";
   //   const styleGuideResponse = await openai.chat.completions.create({
   //     model: selectedModel,

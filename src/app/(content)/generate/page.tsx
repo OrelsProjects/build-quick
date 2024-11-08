@@ -503,14 +503,6 @@ export default function GeneratePage() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-
-      {/* {formik.values.email && (
-        <PaymentSideBar
-          email={formik.values.email}
-          open={showRepositoryPurchase}
-          onOpenChange={handleRepositoryClose}
-        />
-      )} */}
     </div>
   );
 }

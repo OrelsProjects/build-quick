@@ -19,6 +19,7 @@ import {
   Server,
   CreditCard,
   Move3D,
+  Mail,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -181,27 +182,6 @@ export default function Component() {
                 </p>
               </div>
               <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                {/* TypeScript Card */}
-                <motion.div
-                  className="md:min-h-[176px]"
-                  variants={cardVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Card className="h-full">
-                    <CardHeader className="pb-2">
-                      <Code className="h-8 w-8 mb-4 mx-auto" />
-                      <CardTitle>TypeScript</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Strong typing for robust applications
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
                 {/* React & Next.js Card */}
                 <motion.div
                   className="md:min-h-[176px]"
@@ -214,11 +194,12 @@ export default function Component() {
                   <Card className="h-full">
                     <CardHeader className="pb-2">
                       <Rocket className="h-8 w-8 mb-4 mx-auto" />
-                      <CardTitle>React & Next.js</CardTitle>
+                      <CardTitle>React (TS) & Next.js</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Fast, scalable, and SEO-friendly web apps
+                        Fast, scalable, and SEO-friendly web apps with strong
+                        typing
                       </p>
                     </CardContent>
                   </Card>
@@ -337,6 +318,27 @@ export default function Component() {
                     <CardContent>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
                         Choose your preferred database solution
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+                {/* TypeScript Card */}
+                <motion.div
+                  className="md:min-h-[176px]"
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Card className="h-full">
+                    <CardHeader className="pb-2">
+                      <Mail className="h-8 w-8 mb-4 mx-auto" />
+                      <CardTitle>MailGun</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Send welcome and confirmation emails with MailGun
                       </p>
                     </CardContent>
                   </Card>

@@ -90,11 +90,24 @@ export default function usePayments() {
     }
   };
 
+  const getSpotsLeft = async () => {
+    try {
+      const response = await axios.get<{ spotsLeft: number }>(
+        "/api/orders/spots-left"
+      );
+      return response.data.spotsLeft;
+    } catch (error: any) {
+      console.error("Error getting spots left", { error });
+      throw error;
+    }
+  };
+
   return {
     approveOrder,
     cancelOrder,
     createOrder,
     getOrder,
+    getSpotsLeft,
     verifyUserPayment,
     showRepositoryPaymentSideBar,
   };

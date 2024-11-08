@@ -14,11 +14,32 @@ import { cn } from "@/lib/utils";
 
 export default function NavigationBar({
   templateName,
+  animate = true,
+  disableOnClick,
 }: {
   templateName: string;
+  animate?: boolean;
+  disableOnClick?: boolean;
 }) {
   const [opacitated, setOpacitated] = React.useState(false);
   const [didHover, setDidHover] = React.useState(false);
+
+  const NavigationButtonContainer = ({
+    href,
+    className,
+    children,
+  }: {
+    href: string;
+    className?: string;
+    children: React.ReactNode;
+  }) =>
+    disableOnClick ? (
+      <div className={className}>{children}</div>
+    ) : (
+      <Link href={href} className={className}>
+        {children}
+      </Link>
+    );
 
   return (
     <TooltipProvider delayDuration={50}>
@@ -27,7 +48,7 @@ export default function NavigationBar({
         whileInView={{ opacity: 1, y: 0 }}
         transition={{
           duration: 0.5,
-          delay: 0.5,
+          delay: animate ? 0.5 : 0,
           type: "spring",
           damping: 15,
           stiffness: 250,
@@ -59,18 +80,18 @@ export default function NavigationBar({
                 type: "spring",
                 stiffness: 200,
                 damping: 15,
-                delay: 0.6,
+                delay: animate ? 0.6 : 0,
                 duration: 1,
               }}
               className="flex items-center space-x-2 px-1 py-1 rounded-full transition-shadow opacity-20"
             >
-              <Link
+              <NavigationButtonContainer
                 href="/gallery"
                 className="flex flex-col justify-center items-center gap-0 text-white text-xs"
               >
                 <Undo2 className="h-4 w-4 md:h-5 md:w-5 text-gray-200 hover:text-gray-400 transition-colors" />
                 Back
-              </Link>
+              </NavigationButtonContainer>
             </motion.div>
           </TooltipTrigger>
           <TooltipContent className="bg-black text-white">
@@ -87,12 +108,12 @@ export default function NavigationBar({
                 type: "spring",
                 stiffness: 200,
                 damping: 15,
-                delay: 0.9,
+                delay: animate ? 0.9 : 0,
                 duration: 1,
               }}
               className="flex items-center space-x-2 px-3 py-2 rounded-full transition-shadow"
             >
-              <Link
+              <NavigationButtonContainer
                 href={
                   "/generate?" +
                   new URLSearchParams({
@@ -103,7 +124,7 @@ export default function NavigationBar({
               >
                 <Check className="h-4 w-4 md:h-5 md:w-5 text-gray-200 hover:text-gray-400 transition-colors" />
                 Yes!
-              </Link>
+              </NavigationButtonContainer>
             </motion.div>
           </TooltipTrigger>
           <TooltipContent className="bg-black text-white">

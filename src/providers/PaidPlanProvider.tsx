@@ -2,7 +2,9 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import PaymentSideBar from "../components/paymentSideBar";
+import PaymentSideBar, {
+  OpenChangeOptions,
+} from "../components/paymentSideBar";
 import usePayments from "../lib/hooks/usePayments";
 import { useCustomRouter } from "../lib/hooks/useCustomRouter";
 
@@ -11,27 +13,32 @@ export default function PaidPlanProvider() {
   const router = useCustomRouter();
   const pathname = usePathname();
 
-  const { verifyUserPayment } = usePayments();
+  const { verifyUserPayment, getSpotsLeft } = usePayments();
 
   const [openPaidPlan, setOpenPaidPlan] = useState(false);
+  const [spotsLeft, setSpotsLeft] = useState<number | null>(null);
 
-  useEffect(() => {}, [searchParams]);
+  useEffect(() => {
+    getSpotsLeft()
+      .then((spots) => setSpotsLeft(spots))
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const showRepository = searchParams.get("repository") === "true";
     setOpenPaidPlan(showRepository);
-    console.log("showRepository", showRepository);
-    const encodedEmail = searchParams.get("to") || "";
-    const email = decodeURIComponent(encodedEmail);
-    verifyUserPayment(email)
-      .then(() => {
-        setOpenPaidPlan(false);
-        router.push("/checkout/success", {
-          preserveQuery: false,
-          paramsToAdd: { to: email },
-        });
-      })
-      .catch(() => {});
+    // console.log("showRepository", showRepository);
+    // const encodedEmail = searchParams.get("to") || "";
+    // const email = decodeURIComponent(encodedEmail);
+    // verifyUserPayment(email)
+    //   .then(() => {
+    //     setOpenPaidPlan(false);
+    //     router.push("/checkout/success", {
+    //       preserveQuery: false,
+    //       paramsToAdd: { to: email },
+    //     });
+    //   })
+    //   .catch(() => {});
   }, [pathname, searchParams]);
 
   const email = useMemo(() => {
@@ -40,13 +47,16 @@ export default function PaidPlanProvider() {
     return decodeURIComponent(encodedEmail);
   }, [pathname, searchParams]);
 
-  const handleClose = (open: boolean) => {
+  const handleClose = (open: boolean, options?: OpenChangeOptions) => {
     if (open) return;
-    const wasCalledFromGenerate = pathname.includes("generate");
-    if (wasCalledFromGenerate) {
-      router.back();
-    }
     setOpenPaidPlan(false);
+
+    if (options?.avoidNavigation) return;
+
+    router.push(pathname, {
+      preserveQuery: true,
+      paramsToRemove: ["to", "repository"],
+    });
   };
 
   return (
@@ -54,6 +64,7 @@ export default function PaidPlanProvider() {
       open={openPaidPlan}
       onOpenChange={handleClose}
       email={email || ""}
+      spotsLeft={spotsLeft}
     />
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import PaymentButtons from "@/components/ui/paymentButtons";
 import usePayments from "@/lib/hooks/usePayments";
@@ -29,6 +29,14 @@ import { inter } from "@/lib/fontUtils";
 import { cn } from "@/lib/utils";
 import { Product } from "@prisma/client";
 import { useCustomRouter } from "@/lib/hooks/useCustomRouter";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../../../../components/ui/dialog";
 
 const planId = process.env.NEXT_PUBLIC_EARLY_BIRD_PRODUCT_ID as string;
 
@@ -51,15 +59,15 @@ export default function CheckoutPage() {
   const searchParams = useSearchParams();
   const router = useCustomRouter();
   const loadingFetchOrder = useRef(false);
-  const [error, setError] = React.useState<string | null>(null);
-  const [productItem, setProductItem] = React.useState<{
+  const [error, setError] = useState<string | null>(null);
+  const [userPaidAlready, setUserPaidAlready] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
+  const [productItem, setProductItem] = useState<{
     product: Product;
     discount: number;
   } | null>(null);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [email, setEmail] = React.useState(
-    decodeURI(searchParams.get("to") || "")
-  );
+  const [isLoading, setIsLoading] = useState(true);
+  const [email, setEmail] = useState(decodeURI(searchParams.get("to") || ""));
 
   const {
     approveOrder,
@@ -84,7 +92,6 @@ export default function CheckoutPage() {
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
     fetchOrder();
   }, []);
@@ -92,13 +99,13 @@ export default function CheckoutPage() {
   useEffect(() => {
     verifyUserPayment(email)
       .then(() => {
-        router.push("/checkout/success", {
-          preserveQuery: false,
-          paramsToAdd: { to: email },
-        });
+        setUserPaidAlready(true);
+        setShowDialog(true);
       })
-      .catch(() => {});
-  }, []);
+      .catch(() => {
+        setUserPaidAlready(false);
+      });
+  }, [email]);
 
   const handleCreateOrder = async () => await createOrder(planId, email);
 
@@ -119,6 +126,14 @@ export default function CheckoutPage() {
         paramsToAdd: { to: email },
       });
     }
+  };
+
+  const handleContinueAnyway = () => {
+    setShowDialog(false);
+  };
+
+  const handleLeave = () => {
+    router.push("/", { preserveQuery: false });
   };
 
   const product = productItem?.product;
@@ -288,6 +303,26 @@ export default function CheckoutPage() {
           </Card>
         </div>
       </div>
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogContent closeOnOutsideClick={false}>
+          <DialogHeader>
+            <DialogTitle>Whoa there, déjà vu shopper!</DialogTitle>
+            <DialogDescription>
+              It looks like you&apos;ve already snagged this amazing deal with
+              your email. Are you trying to build a secret stash of our awesome
+              product? (We&apos;re flattered, really!)
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex !flex-col gap-0.5">
+            <Button onClick={handleContinueAnyway}>
+              Nah, I&apos;m just double-dipping in awesomeness!
+            </Button>
+            <Button variant="link" onClick={handleLeave}>
+              Oops, I&apos;ll moonwalk outta here!
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -233,7 +233,7 @@ export function PlaceholdersAndVanishInput({
         value={value}
         rows={rows}
         className={cn(
-          "w-full relative text-sm sm:text-base z-50 border-none dark:text-white bg-transparent text-black rounded-lg focus:outline-none focus:ring-0 p-4 sm:p-6 pr-20 resize-none",
+          "w-full relative z-50 border-none dark:text-white bg-transparent text-black rounded-lg focus:outline-none focus:ring-0 p-4 sm:p-6 pr-20 resize-none",
           animating && "text-transparent dark:text-transparent"
         )}
       />

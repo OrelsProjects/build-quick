@@ -79,7 +79,9 @@ export default function RootLayout({
           </div>
           <PaidPlanProvider />
           <AnalyticsProvider />
-          <AnimationProvider>{children}</AnimationProvider>
+          <AnimationProvider>
+            {children}
+          </AnimationProvider>
         </Suspense>
       </body>
     </html>
