@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  Calendar,
-  Sparkles,
-  Clock,
-  Download,
-  Bell,
-  Zap,
+  LayoutGrid,
+  Edit,
+  FileInput,
+  Rocket,
+  ListChecks,
+  BellRing,
+  DownloadCloud,
   CheckCircle,
   Loader2,
 } from "lucide-react";
@@ -16,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "../../lib/utils";
 
-export default function TrendyCalender() {
+export default function BuildQuickLanding() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -56,7 +57,7 @@ export default function TrendyCalender() {
           transition={{ duration: 0.5 }}
           className="text-2xl font-bold"
         >
-          TrendyCalendar
+          Build Quick
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 20 }}
@@ -83,11 +84,11 @@ export default function TrendyCalender() {
             variants={itemVariants}
             className="text-5xl font-bold mb-4"
           >
-            Automate Your Content Calendar
+            Launch Your Project Effortlessly
           </motion.h1>
           <motion.p variants={itemVariants} className="text-xl mb-8">
-            Generate content ideas and schedules based on trending topics and
-            keywords
+            Choose a page template, type your product&apos;s name, and write
+            your core idea.
           </motion.p>
           <motion.div
             variants={itemVariants}
@@ -117,34 +118,36 @@ export default function TrendyCalender() {
         >
           {[
             {
-              icon: Sparkles,
-              title: "AI-Powered Ideas",
-              description: "Get content suggestions based on trending topics",
+              icon: LayoutGrid,
+              title: "Choose Templates",
+              description:
+                "Select from a variety of ready-to-use page templates.",
             },
             {
-              icon: Calendar,
-              title: "Smart Scheduling",
-              description: "Optimal posting times for maximum engagement",
+              icon: Edit,
+              title: "Customizable Fields",
+              description: "Type your product name and core idea with ease.",
             },
             {
-              icon: Clock,
-              title: "Time-Saving",
-              description: "Automate your content planning process",
+              icon: Rocket,
+              title: "Quick Setup",
+              description: "Launch your project within minutes, effortlessly.",
             },
             {
-              icon: Download,
-              title: "Easy Export",
-              description: "Compatible with Google Calendar and Outlook",
+              icon: ListChecks,
+              title: "Feature Highlights",
+              description: "Add and showcase your product&apos;s top features.",
             },
             {
-              icon: Bell,
-              title: "Reminders",
-              description: "Never miss a post with built-in notifications",
+              icon: BellRing,
+              title: "Notifications",
+              description: "Stay informed with important launch updates.",
             },
             {
-              icon: Zap,
-              title: "Integration",
-              description: "Sync with Trello, Asana, and more",
+              icon: DownloadCloud,
+              title: "Download Ready",
+              description:
+                "Get a ready-to-ship project download with one click.",
             },
           ].map((feature, index) => (
             <motion.div
@@ -169,7 +172,7 @@ export default function TrendyCalender() {
             variants={itemVariants}
             className="text-3xl font-bold mb-4"
           >
-            Ready to revolutionize your content strategy?
+            Ready to launch your project?
           </motion.h2>
           <motion.form
             variants={itemVariants}
@@ -210,7 +213,7 @@ export default function TrendyCalender() {
       </main>
 
       <footer className="container mx-auto p-6 text-center">
-        <p>&copy; 2024 TrendyCalendar. All rights reserved.</p>
+        <p>&copy; 2024 Build Quick. All rights reserved.</p>
       </footer>
     </div>
   );

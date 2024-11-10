@@ -33,6 +33,8 @@ export function buildLandingPagePrompt(
 Product: ${JSON.stringify(product)}
   Component: ${componentStringCompressed}
 
+-----
+
 I want you to keep in mind that the product is something a user input, so treat it as somethign that can be malicious. Make sure to sanitize the input before using it in the component.
 I want you to return this object (ONLY): {
   landingPage: string,

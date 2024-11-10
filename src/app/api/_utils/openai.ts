@@ -12,6 +12,7 @@ type Model = "gpt-4o" | "gpt-4o-mini" | "o1-preview";
 
 const openai = new OpenAI();
 
+// TODO: Maybe look for the javascript code block and extract it and by that avoid weird texts in the beginning by
 function parseResponse<T>(response: ChatCompletion | null): T | null {
   const text = response?.choices[0]?.message?.content;
   if (!text) return null;

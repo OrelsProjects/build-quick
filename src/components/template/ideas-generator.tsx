@@ -84,7 +84,7 @@ export default function IdeasGenerator() {
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
                   Turn your idea into a fully functional landing page with just
-                  a few clicks. No coding required.
+                  a few clicks.
                 </p>
               </div>
               <div className="space-x-4">
