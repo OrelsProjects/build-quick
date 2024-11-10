@@ -191,8 +191,8 @@ export default function CheckoutPage() {
                 <>
                   {product && (
                     <div className="flex justify-between items-center">
-                      <span className="text-lg">{product?.name}</span>
-                      <span className="text-lg font-semibold">
+                      <span className="text-base md:text-lg">{product?.name}</span>
+                      <span className="text-base md:text-lg font-semibold">
                         {product?.currency} {product.price.toFixed(2)}
                       </span>
                     </div>
