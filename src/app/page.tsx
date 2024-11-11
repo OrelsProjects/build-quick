@@ -282,7 +282,7 @@ export default function Component() {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    transition={{ duration: 0.5 }}
                   >
                     <Card className="h-full hover:shadow-lg transition-shadow bg-card text-card-foreground">
                       <CardHeader className="pb-2">
