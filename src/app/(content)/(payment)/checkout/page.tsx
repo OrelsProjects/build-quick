@@ -48,6 +48,7 @@ const features = [
   "Framer Motion for animations",
   "PayPal integration for payments",
   "Posthog for advanced analytics and session records",
+  "Mailgun for emails sending",
 ];
 
 const bonuses = [

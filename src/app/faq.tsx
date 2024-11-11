@@ -20,7 +20,7 @@ const faqData = [
             <li>Typescript</li>
             <li>React, NextJS, TailwindCSS, Shadcn, and Prisma</li>
             <li>Compatible with Supabase or MongoDB</li>
-            <li>Emails sending with MailGun</li>
+            <li>Emails sending with Mailgun</li>
         </ul>
         <br />
         <p>

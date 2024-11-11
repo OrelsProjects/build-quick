@@ -266,8 +266,8 @@ export default function Component() {
                   },
                   {
                     icon: Mail,
-                    title: "MailGun",
-                    description: "Send emails with ease using MailGun.",
+                    title: "Mailgun",
+                    description: "Send emails with ease using Mailgun.",
                   },
                   {
                     icon: CreditCard,
