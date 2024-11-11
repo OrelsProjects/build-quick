@@ -80,7 +80,7 @@ export default function Component() {
             How does it work?
           </a>
           <a
-            className="text-sm font-medium hover:text-primary transition-colors cursor-pointer"
+            className="text-sm font-medium hover:text-primary transition-colors cursor-pointer hidden md:inline-block"
             onClick={(e) => {
               e.preventDefault();
               document?.getElementById("Features")?.scrollIntoView({
