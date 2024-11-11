@@ -191,7 +191,9 @@ export default function CheckoutPage() {
                 <>
                   {product && (
                     <div className="flex justify-between items-center">
-                      <span className="text-base md:text-lg">{product?.name}</span>
+                      <span className="text-base md:text-lg">
+                        {product?.name}
+                      </span>
                       <span className="text-base md:text-lg font-semibold">
                         {product?.currency} {product.price.toFixed(2)}
                       </span>
@@ -245,6 +247,7 @@ export default function CheckoutPage() {
                       }}
                       onError={(err: any) => {
                         setError(err.message);
+                        console.log("Error", err);
                       }}
                       onCancel={async (data) => {
                         if (data.orderID) {
