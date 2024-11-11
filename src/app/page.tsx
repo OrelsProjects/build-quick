@@ -103,7 +103,7 @@ export default function Component() {
               transition={{ duration: 0.5 }}
             >
               <div className="space-y-10">
-                <h1 className="font-extrabold text-4xl lg:text-6xl tracking-tight md:-mb-4 flex flex-col gap-3 items-center">
+                <h1 className="font-extrabold text-3xl lg:text-6xl tracking-tight md:-mb-4 flex flex-col gap-3 items-center">
                   Launch your startup
                   <span className="whitespace-nowrap relative mx-auto">
                     <span className="mr-3 sm:mr-4 md:mr-5">in minutes,</span>
