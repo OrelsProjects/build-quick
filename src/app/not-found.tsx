@@ -70,7 +70,7 @@ export default function NotFound() {
         </div>
         {isCheckoutFailed && (
           <div className="mt-4 text-gray-500">
-            <p>If the email link doesn't work, please contact me at:</p>
+            <p>If the email link doesn&apos;t work, please contact me at:</p>
             <div className="flex items-center justify-center mt-2">
               <span className="font-medium">{supportEmail}</span>
               <Button
