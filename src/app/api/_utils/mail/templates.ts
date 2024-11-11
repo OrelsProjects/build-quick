@@ -71,7 +71,7 @@ export const welcomeTemplate = (paid: boolean, to: string) => `<!DOCTYPE html>
         
         <p>I am not going to talk about those here… those are my playground where I test new ways of thinking and find great opportunities.</p>
         
-        <p>And after doing so much, I found that one of the best places to find success is SaaS businesses. They require almost 0$ and can generate TONS of value.</p>
+        <p>And after so many projects, I found that one of the best places to find success is SaaS businesses. They require almost 0$ and can generate TONS of value.</p>
         
         <p>My goal with this product is to help you transfer the ideas from your head to a functional website with a beautiful landing page to test your ideas.</p>
         
