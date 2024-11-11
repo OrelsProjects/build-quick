@@ -339,17 +339,18 @@ export default function GeneratePage() {
         </motion.div>
 
         <motion.div
-          className="w-full max-h-40 flex flex-row items-start justify-start gap-4"
+          className="w-full max-h-52 flex flex-row items-start justify-start gap-4"
           {...fadeInOut}
         >
           <TemplateContainer
+            showName={false}
             template={selectedTemplate || ""}
-            size="small"
+            size="medium"
             className="flex-shrink-0"
             openInNewTab
           />
           <motion.div
-            className="w-full h-full max-h-40 flex flex-col text-gray-600 gap-1 font-sans text-center md:text-start"
+            className="w-full h-full max-h-44 flex flex-col text-gray-600 gap-1 font-sans text-center md:text-start"
             {...fadeInOut}
           >
             {formik.values.ideaName && stage > 1 && (
@@ -406,15 +407,15 @@ export default function GeneratePage() {
               </motion.div>
             )}
             {stage === 3 && (
-              <motion.div key="stage3" {...fadeInOut}>
+              <motion.div className="w-full" key="stage3" {...fadeInOut}>
                 <h2 className="text-2xl font-bold mb-4">
-                  Enter your email to receive your results
+                  Get your landing page:
                 </h2>
                 <Input
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="Enter your best email"
+                  placeholder="Enter your favorite email"
                   error={!!formik.errors.email}
                   required
                   onChange={(e) => {
@@ -435,7 +436,7 @@ export default function GeneratePage() {
                         Just a moment...
                       </>
                     ) : (
-                      "Send Results"
+                      "Send it to me"
                     )}
                   </Button>
                   <Button
@@ -466,7 +467,7 @@ export default function GeneratePage() {
                   {stage === 3 ? "Sending..." : "Just a moment..."}
                 </>
               ) : stage === 3 ? (
-                "Send Results"
+                "Send it to me"
               ) : (
                 "Next"
               )}

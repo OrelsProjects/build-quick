@@ -11,6 +11,7 @@ import {
   Settings,
   Layout,
   Eye,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,14 +26,27 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { AvatarIcon } from "@radix-ui/react-icons";
+import { cn } from "../../lib/utils";
 
 type Theme = "light" | "dark";
 
 export default function TrustBoost() {
-  const [email, setEmail] = useState("");
   const [widgetType, setWidgetType] = useState("recent-sales");
   const [showAvatar, setShowAvatar] = useState(true);
   const [theme, setTheme] = useState<Theme>("light");
+
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setIsLoading(false);
+    setIsCompleted(true);
+  };
 
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
@@ -59,6 +73,7 @@ export default function TrustBoost() {
       avatar: "bg-gray-700",
     },
   };
+
   return (
     <div className="min-h-screen bg-indigo-900 text-gray-200">
       {/* Header */}
@@ -100,18 +115,46 @@ export default function TrustBoost() {
           Generate trust-boosting widgets like recent purchases, visitor counts,
           and live testimonials for your e-commerce site.
         </motion.p>
-        <motion.div {...fadeInUp} className="flex justify-center space-x-4">
+        <motion.form
+          {...fadeInUp}
+          onSubmit={handleSubmit}
+          className="flex flex-col items-center space-y-4"
+        >
           <Input
             type="email"
+            required
             placeholder="Enter your email"
             className="w-64 text-indigo-900"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <Button className="bg-green-400 text-indigo-900 hover:bg-green-500">
-            Get Started <ChevronRight className="ml-2" size={20} />
+          <Button
+            type="submit"
+            disabled={isLoading || isCompleted}
+            className={cn(
+              "bg-green-400 text-indigo-900 hover:bg-green-500 w-64",
+              {
+                "px-10": !isLoading && !isCompleted,
+              }
+            )}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </>
+            ) : isCompleted ? (
+              <>
+                <CheckCircle className="mr-2 h-4 w-4" />
+                Subscribed
+              </>
+            ) : (
+              <span className="flex flex-row items-center">
+                Get Started <ChevronRight className="ml-2" size={20} />
+              </span>
+            )}
           </Button>
-        </motion.div>
+        </motion.form>
       </section>
 
       {/* Trust Signals */}
@@ -181,8 +224,6 @@ export default function TrustBoost() {
       </section>
 
       {/* How It Works */}
-
-      {/* Widget Customization Section */}
       <section id="how-it-works" className="bg-indigo-800 py-20">
         <div className="container mx-auto">
           <motion.h2

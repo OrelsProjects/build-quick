@@ -2,12 +2,30 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Shield, FileText, RefreshCw, Download } from "lucide-react";
+import {
+  Shield,
+  FileText,
+  RefreshCw,
+  Download,
+  CheckCircle,
+  Loader2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function PolicyCraft() {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setIsLoading(false);
+    setIsSubmitted(true);
+  };
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -209,23 +227,34 @@ export default function PolicyCraft() {
               Get started with PolicyCraft today and ensure your business is
               protected.
             </p>
-            <form
-              className="max-w-md mx-auto"
-              onSubmit={(e) => e.preventDefault()}
-            >
+            <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
               <div className="flex gap-2">
                 <Input
                   type="email"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                   className="flex-grow"
                 />
                 <Button
                   type="submit"
+                  disabled={isLoading || isSubmitted}
                   className="bg-green-700 hover:bg-green-600 text-white"
                 >
-                  Get Started
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : isSubmitted ? (
+                    <>
+                      <CheckCircle className="mr-2 h-4 w-4" />
+                      Subscribed!
+                    </>
+                  ) : (
+                    "Get Started"
+                  )}
                 </Button>
               </div>
             </form>

@@ -2,11 +2,32 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MousePointer, List, MessageCircle } from "lucide-react";
+import {
+  MousePointer,
+  List,
+  MessageCircle,
+  CheckCircle,
+  Loader2,
+} from "lucide-react";
 import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { cn } from "../../lib/utils";
 
 export default function OnboardFlow() {
   const [activeFeature, setActiveFeature] = useState(0);
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setIsLoading(false);
+    setIsCompleted(true);
+  };
 
   const features = [
     { name: "Tooltips", icon: <MousePointer className="w-6 h-6" /> },
@@ -48,8 +69,11 @@ export default function OnboardFlow() {
               </a>
             </li>
             <li>
-              <a href="#" className="text-gray-600 hover:text-purple-600">
-                Pricing
+              <a
+                href="#get-started"
+                className="text-gray-600 hover:text-purple-600"
+              >
+                Get started
               </a>
             </li>
           </ul>
@@ -222,16 +246,47 @@ export default function OnboardFlow() {
           variants={fadeInUp}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-4xl font-bold text-gray-800 mb-6">
-            Ready to Boost Your User Engagement?
+          <h2 className="text-3xl font-bold mb-6 text-gray-800">
+            Stay Updated with OnboardFlow
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Join thousands of product managers who are creating delightful
-            onboarding experiences without writing a single line of code.
+            Sign up to receive the latest updates and exclusive offers.
           </p>
-          <button className="bg-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-purple-700 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center mx-auto">
-            Start Your Free Trial
-          </button>
+          <motion.form
+            id="get-started"
+            onSubmit={handleSubmit}
+            className="flex justify-center items-center gap-4"
+          >
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="max-w-xs bg-white bg-opacity-20 text-gray-800 placeholder:text-gray-400 border-gray-400"
+            />
+            <Button
+              type="submit"
+              disabled={isLoading || isCompleted}
+              className={cn("bg-purple-600 text-white hover:bg-purple-700", {
+                "px-10": !isLoading && !isCompleted,
+              })}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </>
+              ) : isCompleted ? (
+                <>
+                  <CheckCircle className="mr-2 h-4 w-4" />
+                  Subscribed
+                </>
+              ) : (
+                "Subscribe"
+              )}
+            </Button>
+          </motion.form>
         </motion.section>
       </main>
 

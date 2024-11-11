@@ -1,8 +1,31 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ShoppingBag, Users, MessageCircle } from "lucide-react";
+import {
+  ArrowRight,
+  ShoppingBag,
+  Users,
+  MessageCircle,
+  CheckCircle,
+  Loader2,
+} from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { cn } from "../../lib/utils";
+import { Input } from "../ui/input";
 
 export default function TrustBooster() {
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setIsLoading(false);
+    setIsCompleted(true);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white">
       {/* Background shapes */}
@@ -59,8 +82,8 @@ export default function TrustBooster() {
                 </a>
               </li>
               <li>
-                <a href="#pricing" className="hover:underline">
-                  Pricing
+                <a href="#get-started" className="hover:underline">
+                  Get started
                 </a>
               </li>
             </ul>
@@ -74,9 +97,12 @@ export default function TrustBooster() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-5xl font-bold mb-6">Boost Trust on Your E-commerce</h1>
+          <h1 className="text-5xl font-bold mb-6">
+            Boost Trust on Your E-commerce
+          </h1>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Integrate widgets like recent purchases, visitor counts, and live testimonials to build confidence among your shoppers.
+            Integrate widgets like recent purchases, visitor counts, and live
+            testimonials to build confidence among your shoppers.
           </p>
           <Button
             size="lg"
@@ -106,10 +132,11 @@ export default function TrustBooster() {
               viewport={{ once: true }}
             >
               <ShoppingBag className="h-12 w-12 mb-4 text-indigo-300" />
-              <h3 className="text-xl font-semibold mb-2">
-                Recent Purchases
-              </h3>
-              <p>Showcase real-time purchase updates to instill confidence among new customers.</p>
+              <h3 className="text-xl font-semibold mb-2">Recent Purchases</h3>
+              <p>
+                Showcase real-time purchase updates to instill confidence among
+                new customers.
+              </p>
             </motion.div>
             <motion.div
               className="bg-white/10 p-6 rounded-lg backdrop-blur-sm"
@@ -119,10 +146,11 @@ export default function TrustBooster() {
               viewport={{ once: true }}
             >
               <Users className="h-12 w-12 mb-4 text-indigo-300" />
-              <h3 className="text-xl font-semibold mb-2">
-                Visitor Counts
-              </h3>
-              <p>Display live visitor stats to emphasize popularity and trustworthiness.</p>
+              <h3 className="text-xl font-semibold mb-2">Visitor Counts</h3>
+              <p>
+                Display live visitor stats to emphasize popularity and
+                trustworthiness.
+              </p>
             </motion.div>
             <motion.div
               className="bg-white/10 p-6 rounded-lg backdrop-blur-sm"
@@ -132,10 +160,11 @@ export default function TrustBooster() {
               viewport={{ once: true }}
             >
               <MessageCircle className="h-12 w-12 mb-4 text-indigo-300" />
-              <h3 className="text-xl font-semibold mb-2">
-                Live Testimonials
-              </h3>
-              <p>Feature authentic customer reviews to enhance credibility instantly.</p>
+              <h3 className="text-xl font-semibold mb-2">Live Testimonials</h3>
+              <p>
+                Feature authentic customer reviews to enhance credibility
+                instantly.
+              </p>
             </motion.div>
           </div>
         </motion.section>
@@ -153,7 +182,13 @@ export default function TrustBooster() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <ol className="space-y-6">
-                {["Sign Up for Your Account","Choose Your Widgets","Customize to Match Your Brand","Embed Easily Into Your Site","Enjoy Increased Trust!"].map((step, index) => (
+                {[
+                  "Sign Up for Your Account",
+                  "Choose Your Widgets",
+                  "Customize to Match Your Brand",
+                  "Embed Easily Into Your Site",
+                  "Enjoy Increased Trust!",
+                ].map((step, index) => (
                   <motion.li
                     key={index}
                     className="flex items-center space-x-4"
@@ -184,7 +219,7 @@ export default function TrustBooster() {
           </div>
         </motion.section>
 
-        {/* Call to Action Section */}
+        {/* Subscription Section */}
         <motion.section
           className="container mx-auto px-4 py-20 text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -192,25 +227,47 @@ export default function TrustBooster() {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl font-bold mb-6">Ready to Boost Trust?</h2>
+          <h2 className="text-3xl font-bold mb-6">
+            Stay Updated with TrustBooster
+          </h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join countless e-commerce platforms that trust us to increase their credibility.
+            Be the first to know about new features and updates.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+          <motion.form
+            id="get-started"
+            onSubmit={handleSubmit}
+            className="flex justify-center items-center gap-4"
+          >
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="max-w-xs bg-white bg-opacity-20 text-white placeholder:text-gray-100/70 border-white"
+            />
             <Button
-              size="lg"
-              className="bg-white text-purple-600 hover:bg-gray-100"
+              type="submit"
+              disabled={isLoading || isCompleted}
+              className={cn("bg-white text-purple-600 hover:bg-gray-100", {
+                "px-10": !isLoading && !isCompleted,
+              })}
             >
-              Get Started for Free
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </>
+              ) : isCompleted ? (
+                <>
+                  <CheckCircle className="mr-2 h-4 w-4" />
+                  Subscribed
+                </>
+              ) : (
+                "Subscribe"
+              )}
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white bg-transparent hover:bg-white/10 hover:text-white"
-            >
-              Schedule Your Demo
-            </Button>
-          </div>
+          </motion.form>
         </motion.section>
 
         {/* Footer */}

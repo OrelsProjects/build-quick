@@ -23,6 +23,28 @@ export default function NavigationBar({
 }) {
   const [opacitated, setOpacitated] = React.useState(false);
   const [didHover, setDidHover] = React.useState(false);
+  const [positionX, setPositionX] = React.useState<number | null>(null);
+
+  React.useEffect(() => {
+    // Load saved position from localStorage on mount
+    // const savedPosition = localStorage.getItem("navigationBarX");
+    // if (savedPosition) {
+    //   setPositionX(parseFloat(-savedPosition));
+    // } else {
+    // Center position if no saved value
+    setPositionX(0);
+    // }
+  }, []);
+
+  const handleDragEnd = (event: any, info: { point: { x: number } }) => {
+    // Save new x position in localStorage on drag end
+    localStorage.setItem("navigationBarX", info.point.x.toString());
+  };
+
+  if (positionX === null) {
+    // Avoid rendering until the position is determined
+    return null;
+  }
 
   const NavigationButtonContainer = ({
     href,
@@ -44,8 +66,11 @@ export default function NavigationBar({
   return (
     <TooltipProvider delayDuration={50}>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        drag="x"
+        dragConstraints={{ left: -480, right: 480 }} // 30rem in each direction (30rem = 480px)
+        onDragEnd={handleDragEnd}
+        initial={{ x: positionX, opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{
           duration: 0.5,
           delay: animate ? 0.5 : 0,

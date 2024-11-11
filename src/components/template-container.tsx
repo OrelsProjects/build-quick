@@ -14,6 +14,7 @@ const templateContainerVariants = cva(
       size: {
         default: "",
         small: "h-40 w-40",
+        medium: "h-48 w-48",
       },
     },
   }
@@ -23,6 +24,7 @@ const bottomBarTextVariants = cva("", {
     textSize: {
       default: "font-semibold text-lg",
       small: "font-semibold text-sm",
+      medium: "font-semibold text-base",
     },
   },
 });
@@ -30,7 +32,8 @@ const bottomBarTextVariants = cva("", {
 export interface TemplateContainerProps {
   template: Template | TemplateRouter;
   className?: string;
-  size?: "default" | "small";
+  showName?: boolean;
+  size?: "default" | "small" | "medium";
   openInNewTab?: boolean;
 }
 
@@ -39,6 +42,7 @@ export default function TemplateContainer({
   className,
   openInNewTab,
   size = "default",
+  showName = true,
 }: TemplateContainerProps) {
   const templateObject = useMemo(() => {
     if (typeof template === "string") {
@@ -67,11 +71,17 @@ export default function TemplateContainer({
               />
             </Link>
           </div>
-          <div className="p-4 bg-background/80 backdrop-blur-sm absolute bottom-0 left-0 right-0">
-            <h2 className={cn(bottomBarTextVariants({ textSize: size }))}>
-              {templateObject.name}
-            </h2>
-          </div>
+          {showName && (
+            <div className="p-4 bg-background/80 backdrop-blur-sm absolute bottom-0 left-0 right-0">
+              <h2
+                className={cn(
+                  bottomBarTextVariants({ textSize: size || "default" })
+                )}
+              >
+                {templateObject.name}
+              </h2>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

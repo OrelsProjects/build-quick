@@ -12,11 +12,11 @@ import TrustBoost from "@/components/template/trust-boost";
 import TrendyCalender from "@/components/template/trendy-calendar";
 
 export const templates: Template[] = [
-  {
-    name: "Ideas Generator",
-    image: "/templates/ideas-generator-large.png",
-    id: "ideas-generator",
-  },
+  // {
+  //   name: "Ideas Generator",
+  //   image: "/templates/ideas-generator-large.png",
+  //   id: "ideas-generator",
+  // },
   {
     name: "Data Harvester",
     image: "/templates/data-harvester-large.png",
@@ -32,11 +32,11 @@ export const templates: Template[] = [
     image: "/templates/trendy-calendar-large.png",
     id: "trendy-calendar",
   },
-  {
-    name: "Logo Generator",
-    image: "/templates/logo-generator-large.png",
-    id: "logo-generator",
-  },
+  // {
+  //   name: "Logo Generator",
+  //   image: "/templates/logo-generator-large.png",
+  //   id: "logo-generator",
+  // },
   {
     name: "Newsletter Curator",
     image: "/templates/newsletter-curator-large.png",

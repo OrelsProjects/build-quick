@@ -159,7 +159,7 @@ export default function TrendyCalender() {
           ))}
         </motion.div>
 
-        <motion.div
+        <motion.section
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -206,7 +206,7 @@ export default function TrendyCalender() {
               )}
             </Button>
           </motion.form>
-        </motion.div>
+        </motion.section>
       </main>
 
       <footer className="container mx-auto p-6 text-center">

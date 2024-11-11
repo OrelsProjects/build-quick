@@ -1,25 +1,55 @@
-'use client'
+"use client";
 
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { MessageSquare, Clock, Zap, BarChart } from "lucide-react"
-import Link from "next/link"
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  MessageSquare,
+  Clock,
+  Zap,
+  BarChart,
+  CheckCircle,
+  Loader2,
+} from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { Input } from "../ui/input";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6 },
-}
+};
 
-const AnimatedLogo = () => (
+const AnimatedLogo = ({ color = "#3B82F6" }: { color?: string }) => (
   <svg width="150" height="40" viewBox="0 0 150 40" className="w-auto h-8">
-    <rect width="40" height="40" rx="8" fill="#3B82F6" className="animate-pulse" />
-    <text x="50" y="28" fontSize="24" fontWeight="bold" fill="#1F2937">MacroSys</text>
+    <rect
+      width="40"
+      height="40"
+      rx="8"
+      fill="#3B82F6"
+      className="animate-pulse"
+    />
+    <text x="50" y="28" fontSize="24" fontWeight="bold" fill={color}>
+      MacroSys
+    </text>
   </svg>
-)
+);
 
 export default function SocialProofGenerator() {
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setIsLoading(false);
+    setIsSubmitted(true);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <header className="bg-white shadow-sm">
@@ -28,18 +58,27 @@ export default function SocialProofGenerator() {
           <nav>
             <ul className="flex space-x-6">
               <li>
-                <Link href="#features" className="text-blue-600 hover:text-blue-800">
+                <Link
+                  href="#features"
+                  className="text-blue-600 hover:text-blue-800"
+                >
                   Features
                 </Link>
               </li>
               <li>
-                <Link href="#how-it-works" className="text-blue-600 hover:text-blue-800">
+                <Link
+                  href="#how-it-works"
+                  className="text-blue-600 hover:text-blue-800"
+                >
                   How It Works
                 </Link>
               </li>
               <li>
-                <Link href="#demo" className="text-blue-600 hover:text-blue-800">
-                  Request Demo
+                <Link
+                  href="#get-started"
+                  className="text-blue-600 hover:text-blue-800"
+                >
+                  Get started
                 </Link>
               </li>
             </ul>
@@ -67,6 +106,13 @@ export default function SocialProofGenerator() {
               <Button
                 size="lg"
                 className="bg-blue-600 hover:bg-blue-700 text-white"
+                // Go to #cta section
+                onClick={() =>
+                  document?.getElementById("demo")?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  })
+                }
               >
                 Schedule a Demo
               </Button>
@@ -201,14 +247,16 @@ export default function SocialProofGenerator() {
                 transition={{ duration: 0.5 }}
               >
                 <div className="w-full h-[400px] bg-gray-200 rounded-lg shadow-lg flex items-center justify-center">
-                  <span className="text-2xl text-gray-500">Demo Video Placeholder</span>
+                  <span className="text-2xl text-gray-500">
+                    Demo Video Placeholder
+                  </span>
                 </div>
               </motion.div>
             </div>
           </div>
         </section>
 
-        <section id="demo" className="py-20 bg-blue-600 text-white">
+        <section id="get-started" className="py-20 bg-blue-600 text-white">
           <div className="container mx-auto px-4 text-center">
             <motion.h2
               className="text-3xl font-bold mb-6"
@@ -224,21 +272,44 @@ export default function SocialProofGenerator() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Schedule a demo today and see how our macro system can transform
-              your customer support efficiency.
+              Subscribe to receive updates and insights into optimizing your
+              support workflow.
             </motion.p>
-            <motion.div
+            <motion.form
+              onSubmit={handleSubmit}
+              className="flex flex-col items-center space-y-4"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full max-w-md text-gray-900"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
               <Button
-                size="lg"
-                className="bg-white text-blue-600 hover:bg-gray-100"
+                type="submit"
+                className="bg-white text-blue-600 hover:bg-gray-100 w-full max-w-md"
+                disabled={isLoading || isSubmitted}
               >
-                Schedule a Demo
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Submitting...
+                  </>
+                ) : isSubmitted ? (
+                  <>
+                    <CheckCircle className="mr-2 h-4 w-4" />
+                    Subscribed!
+                  </>
+                ) : (
+                  "Subscribe"
+                )}
               </Button>
-            </motion.div>
+            </motion.form>
           </div>
         </section>
       </main>
@@ -247,7 +318,7 @@ export default function SocialProofGenerator() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <AnimatedLogo />
+              <AnimatedLogo color="#ffffff" />
               <p className="text-gray-400 mt-4">
                 Empowering support teams with efficient macro systems.
               </p>
@@ -256,12 +327,18 @@ export default function SocialProofGenerator() {
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#features" className="text-gray-400 hover:text-white">
+                  <Link
+                    href="#features"
+                    className="text-gray-400 hover:text-white"
+                  >
                     Features
                   </Link>
                 </li>
                 <li>
-                  <Link href="#how-it-works" className="text-gray-400 hover:text-white">
+                  <Link
+                    href="#how-it-works"
+                    className="text-gray-400 hover:text-white"
+                  >
                     How It Works
                   </Link>
                 </li>
@@ -287,5 +364,5 @@ export default function SocialProofGenerator() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

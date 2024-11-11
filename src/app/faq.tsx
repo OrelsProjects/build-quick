@@ -74,13 +74,12 @@ const faqData = [
                 `,
   },
 
-  // Why should I use this and not another template? - This is more than a template. You choose your favorite landing page, type your idea, get the relevant keys (API, DB, PayPal keys etc.) and deploy to vercel.<br/> As simple as that.
   {
     question: "Why should I use this and not any other template?",
     answer: `
         <div>
             <p>
-                This is more than a template.<br/> You choose your favorite landing page, type your idea, get the relevant keys (API, DB, PayPal keys etc.) and deploy to vercel.<br/> As simple as that. <br/> <strong>You don't need to add a single line of code.</strog>
+                This is more than a template.<br/> You choose your favorite landing page, type your idea, get the relevant keys (API, DB, PayPal keys etc.) and deploy.<br/> <br/> As simple as that.<br/> <br/> <strong>You don't need to add a single line of code.</strog>
             </p>
         </div>
             `,
@@ -89,7 +88,10 @@ const faqData = [
 
 export default function FAQSection({ className }: { className?: string }) {
   return (
-    <section className={cn("w-full py-12 md:py-24 lg:py-32", className)}>
+    <section
+      id="FAQ"
+      className={cn("w-full py-12 md:py-24 lg:py-32", className)}
+    >
       <div className="flex flex-col gap-10 items-center md:flex-row md:justify-center md:items-start px-4 md:px-6">
         <h2 className="text-xl font-bold tracking-tighter sm:text-3xl text-center mb-8">
           Frequently asked questions

@@ -68,25 +68,44 @@ export default function Component() {
         </a>
         <nav className="ml-auto flex gap-4 sm:gap-6">
           <a
-            className="text-sm font-medium hover:text-primary transition-colors"
-            href="#"
+            className="text-sm font-medium hover:text-primary transition-colors cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              document?.getElementById("how-it-works")?.scrollIntoView({
+                block: "center",
+                behavior: "smooth",
+              });
+            }}
+          >
+            How does it work?
+          </a>
+          <a
+            className="text-sm font-medium hover:text-primary transition-colors cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              document?.getElementById("Features")?.scrollIntoView({
+                block: "center",
+                behavior: "smooth",
+              });
+            }}
           >
             Features
           </a>
           <a
-            className="text-sm font-medium hover:text-primary transition-colors"
-            href="#"
+            className="text-sm font-medium hover:text-primary transition-colors cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              document?.getElementById("FAQ")?.scrollIntoView({
+                block: "center",
+                behavior: "smooth",
+              });
+            }}
           >
-            Pricing
-          </a>
-          <a
-            className="text-sm font-medium hover:text-primary transition-colors"
-            href="#"
-          >
-            About
+            FAQ
           </a>
         </nav>
       </header>
+
       <motion.main
         className="flex-1 bg-gradient-to-tl from-primary/20 to-secondary/40 bg-cover"
         variants={backgroundVariants}
@@ -130,7 +149,10 @@ export default function Component() {
             </motion.div>
           </div>
         </section>
-        <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32 bg-card">
+        <section
+          id="how-it-works"
+          className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32 bg-card"
+        >
           <div className="container px-4 md:px-6">
             <motion.div
               className="grid gap-6 items-center"
@@ -142,7 +164,7 @@ export default function Component() {
             >
               <div className="flex flex-col justify-center space-y-8 text-center">
                 <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
+                  <h2 className="text-3xl font-bold tracking-tight sm:text-5xl text-primary">
                     How It Works
                   </h2>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
@@ -169,13 +191,13 @@ export default function Component() {
                             </CardTitle>
                           </CardHeader>
                           <CardContent>
-                            <p className="text-sm md:text-base text-muted-foreground">
+                            <p className="text-sm md:text-base text-foreground/90">
                               {step === 1 &&
-                                "Select from our curated collection of landing page templates."}
+                                "Select a landing page template you like."}
                               {step === 2 &&
                                 "Tell us about your core feature in 255 words or less."}
                               {step === 3 &&
-                                "Receive a fully equipped code repository you can tweak and deploy on your own terms."}
+                                "Get your repository link and deploy it!"}
                             </p>
                           </CardContent>
                         </Card>
@@ -187,7 +209,10 @@ export default function Component() {
             </motion.div>
           </div>
         </section>
-        <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32 bg-transparent">
+        <section
+          id="Features"
+          className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32 bg-transparent"
+        >
           <div className="container px-4 md:px-6">
             <motion.div
               className="flex flex-col items-center justify-center space-y-4 text-center"
@@ -278,7 +303,9 @@ export default function Component() {
             </motion.div>
           </div>
         </section>
+
         <FAQSection className="bg-background" />
+
         <section className="w-full flex justify-center items-center py-12 md:py-24 lg:py-32 text-center">
           <div className="container px-4 md:px-6">
             <motion.div
@@ -301,7 +328,7 @@ export default function Component() {
       </motion.main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-border bg-card">
         <p className="text-xs text-muted-foreground">
-          © 2023 BuildQuick. All rights reserved.
+          © 2024 BuildQuick. All rights reserved.
         </p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link
