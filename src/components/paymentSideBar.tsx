@@ -52,7 +52,6 @@ export default function PaymentSideBar({
   spotsLeft,
 }: PaymentSideBarProps) {
   const router = useCustomRouter();
-  const pathname = usePathname();
   const [routingToCheckout, setRoutingToCheckout] = useState(false);
 
   const FullRefund = ({ className }: { className?: string }) => (
@@ -60,10 +59,12 @@ export default function PaymentSideBar({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className={cn("text-base font-semibold text-blue-900", className)}
+      className={cn("text-sm md:text-base", className)}
     >
-      💸 Full Refund Guarantee: If you don&apos;t receive the repository within
-      30 days, we&apos;ll issue a complete refund—no questions asked.
+      <span className="font-semibold text-blue-900">💸 Full Refund Guarantee:</span> I&apos;m still hard at work bringing this product
+      to life!
+      <br /> If I don&apos;t deliver the final version to you within 30 days, you'll
+      receive a complete refund—no questions asked.
     </motion.p>
   );
 
