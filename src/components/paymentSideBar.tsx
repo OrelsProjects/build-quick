@@ -63,7 +63,7 @@ export default function PaymentSideBar({
     >
       <span className="font-semibold text-blue-900">💸 Full Refund Guarantee:</span> I&apos;m still hard at work bringing this product
       to life!
-      <br /> If I don&apos;t deliver the final version to you within 30 days, you'll
+      <br /> If I don&apos;t deliver the final version to you within 30 days, you&apos;ll
       receive a complete refund—no questions asked.
     </motion.p>
   );
