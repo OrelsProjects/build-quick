@@ -1,9 +1,13 @@
 "use client";
 
-import { Comfortaa } from "next/font/google";
-import { Inter } from "next/font/google";
+import { Comfortaa, Roboto, Montserrat, Inter } from "next/font/google";
 
 export const comfortaa = Comfortaa({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+});
+
+export const montserrat = Montserrat({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
 });

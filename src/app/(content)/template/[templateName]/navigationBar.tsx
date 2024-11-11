@@ -65,7 +65,7 @@ export default function NavigationBar({
           }, 100);
         }}
         className={cn(
-          "fixed bottom-10 inset-x-0 mx-auto rounded-full shadow-md border bg-gray-600 border-gray-200 w-fit h-fit py-2 px-4 z-50 flex space-x-8 transition-colors duration-150",
+          "fixed bottom-2 md:bottom-10 inset-x-0 mx-auto rounded-full shadow-md border bg-gray-600 border-gray-200 w-fit h-fit py-2 px-4 z-50 flex space-x-8 transition-colors duration-150",
           {
             "bg-opacity-50": opacitated && didHover,
           }
