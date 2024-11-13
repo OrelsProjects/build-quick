@@ -137,7 +137,7 @@ export default function IdeasGenerator() {
                               {step === 1 &&
                                 "Select from our curated collection of landing page templates."}
                               {step === 2 &&
-                                "Tell us about your core feature in 255 words or less."}
+                                "Tell us about your core feature in a few words."}
                               {step === 3 &&
                                 "We'll create your project and provide a download link."}
                             </p>

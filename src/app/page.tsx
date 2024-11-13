@@ -131,9 +131,13 @@ export default function Component() {
                         // Animate fill, as if it starts from the left and fills all the way to the right. Anchor - left
                         initial={{ scaleX: 0, transformOrigin: "0 50%" }}
                         animate={{ scaleX: 1 }}
-                        transition={{ duration: 1, delay: 0.75 }}
-                        className="absolute -left-2 -top-1 -bottom-1 -right-2 md:-left-3 md:-top-0 md:-bottom-0 md:-right-3 -rotate-1 bg-accent rounded-sm"
-                      ></motion.span>
+                        transition={{
+                          duration: 0.5,
+                          delay: 0.75,
+                          ease: "easeInOut",
+                        }}
+                        className="absolute -left-2 -top-1 -bottom-1 -right-2 md:-left-3 md:-top-0 md:-bottom-0 md:-right-3 -rotate-1  bg-gradient-to-r via-accent/85 from-accent to-accent/70 rounded-sm"
+                      />
                       <span className="relative text-transparent bg-clip-text bg-accent-foreground">
                         not days
                       </span>
@@ -195,7 +199,7 @@ export default function Component() {
                               {step === 1 &&
                                 "Select a landing page template you like."}
                               {step === 2 &&
-                                "Tell us about your core feature in 255 words or less."}
+                                "Tell us about your core feature in a few words."}
                               {step === 3 &&
                                 "Get your repository link and deploy it!"}
                             </p>
