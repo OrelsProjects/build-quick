@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "../lib/utils";
 import { yearsOfExperience } from "../lib/dateUtils";
+import { EventTracker } from "../eventTracker";
 
 const faqData = [
   {
@@ -86,6 +87,12 @@ const faqData = [
   },
 ];
 
+const trackFaqClick = (question: string) => {
+  EventTracker.track("faq_click", {
+    question,
+  });
+};
+
 export default function FAQSection({ className }: { className?: string }) {
   return (
     <section
@@ -104,7 +111,16 @@ export default function FAQSection({ className }: { className?: string }) {
                 value={`item-${index}`}
                 className="w-full"
               >
-                <AccordionTrigger className="w-full text-lg font-bold">
+                <AccordionTrigger
+                  className="w-full text-lg font-bold"
+                  onClick={(e) => {
+                    if (
+                      e.currentTarget.getAttribute("aria-expanded") === "false"
+                    ) {
+                      trackFaqClick(faq.question);
+                    }
+                  }}
+                >
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="w-full">
