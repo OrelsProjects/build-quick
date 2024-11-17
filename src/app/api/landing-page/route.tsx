@@ -26,11 +26,26 @@ export async function POST(req: NextRequest) {
       "src/components/template",
       `${templateName}.tsx`
     );
+
+    const blogPath = path.join(
+      process.cwd(),
+      "src/components/template",
+      `blog.tsx`
+    );
+
     const componentString = fs.readFileSync(componentPath, "utf-8");
-    const landingPage = await generateLandingPage(product, componentString);
+    const blogString = fs.readFileSync(blogPath, "utf-8");
+    const landingPage = await generateLandingPage(
+      product,
+      componentString,
+      blogString,
+      true
+    );
 
     // parse the response, replace \n with new lines and \" with "
     const componentStringified = landingPage?.landingPage;
+    const blog1Stringified = landingPage?.blog1 || "";
+    const blog2Stringified = landingPage?.blog2 || "";
     if (!componentStringified) {
       return NextResponse.json(
         { error: "Failed to generate landing page" },
@@ -39,6 +54,14 @@ export async function POST(req: NextRequest) {
     }
 
     const componentParsed = componentStringified
+      .replace(/\\n/g, "\n")
+      .replace(/\\"/g, '"');
+
+    const blog1Parsed = blog1Stringified
+      .replace(/\\n/g, "\n")
+      .replace(/\\"/g, '"');
+
+    const blog2Parsed = blog2Stringified
       .replace(/\\n/g, "\n")
       .replace(/\\"/g, '"');
 
@@ -76,8 +99,19 @@ export async function POST(req: NextRequest) {
       componentParsed
     );
 
+    fs.writeFileSync(
+      path.join(process.cwd(), "src/components/generated", `blog1.tsx`),
+      blog1Parsed
+    );
+
+    fs.writeFileSync(
+      path.join(process.cwd(), "src/components/generated", `blog2.tsx`),
+      blog2Parsed
+    );
+
     return NextResponse.json({ landingPage }, { status: 200 });
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 500 }

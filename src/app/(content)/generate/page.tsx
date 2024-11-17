@@ -142,7 +142,11 @@ export default function GeneratePage() {
               additionalInfo: idea.additionalInfo,
             },
           };
-          await axios.post("/api/registerUser", body);
+          // await axios.post("/api/registerUser", body);
+          await axios.post("/api/landing-page", {
+            product: body.product,
+            templateName: selectedTemplate,
+          });
           setSubmissionComplete(true);
           setShowThankYouDialog(true);
         } catch (error) {
@@ -380,6 +384,7 @@ export default function GeneratePage() {
                   name="ideaName"
                   placeholder="Enter your idea name"
                   required
+                  maxLength={50}
                   onChange={(e) => {
                     formik.handleChange(e);
                     saveIdea({ ideaName: e.target.value });

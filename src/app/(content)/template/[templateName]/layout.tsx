@@ -26,6 +26,7 @@ const Layout = ({
         .replace(/-/g, " ")
         .replace(/\b\w/g, (char) => char.toUpperCase());
 
+      if (!document) return;
       // Set the document title
       document.title = "Template | " + formattedTitle;
     } else {

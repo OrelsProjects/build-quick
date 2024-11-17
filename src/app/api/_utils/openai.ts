@@ -1,14 +1,20 @@
 import OpenAI from "openai";
 import Product from "../../../models/product";
-import { buildLandingPageGuidePrompt, buildLandingPagePrompt } from "./utils";
+import {
+  buildLandingPageGuidePrompt,
+  buildLandingPagePrompt,
+  buildValidationPrompt,
+} from "./utils";
 import { ChatCompletion } from "openai/resources/index.mjs";
 
 export interface LandingPage {
   landingPage: string;
+  blog1: string;
+  blog2: string;
   npmInstallCommands: string;
 }
 
-type Model = "gpt-4o" | "gpt-4o-mini" | "o1-preview";
+type Model = "gpt-4o" | "gpt-4o-mini" | "o1-preview" | "gpt-4o-2024-08-06";
 
 const openai = new OpenAI();
 
@@ -27,6 +33,21 @@ function parseResponse<T>(response: ChatCompletion | null): T | null {
   const obj = JSON.parse(cleanJsonData || "[]");
   return obj as T;
 }
+
+// Can either be a string "Valid" or a landingPage object, in that case we'll use parseResponse
+function parseVerifyResponse(
+  response: ChatCompletion | null,
+  landingPage: LandingPage
+): LandingPage | null {
+  const text = response?.choices[0]?.message?.content;
+
+  if (!text || text === "Valid") {
+    return landingPage;
+  }
+
+  return parseResponse<LandingPage>(response);
+}
+
 /**
  * Generate a landing page for a product
  * @param product is the product to generate a landing page for
@@ -38,57 +59,61 @@ function parseResponse<T>(response: ChatCompletion | null): T | null {
 export async function generateLandingPage(
   product: Product,
   templateCode: string,
-  isFreeUser = true
+  blogCode: string,
+  isPaidUser?: boolean
 ): Promise<LandingPage | null> {
-  return null; // To avoid abuse of the API
-  const selectedModel: Model = isFreeUser ? "gpt-4o-mini" : "gpt-4o";
-  //   const styleGuideResponse = await openai.chat.completions.create({
+  // const selectedModel: Model = !isPaidUser ? "gpt-4o-2024-08-06" : "gpt-4o-mini";
+
+  // const now = new Date();
+  // const prompt = buildLandingPagePrompt(templateCode, blogCode, product);
+  // console.log("About to generate the landing page");
+  // const landingPageResponse = await openai.chat.completions.create({
+  //   model: selectedModel,
+  //   messages: [
+  //     {
+  //       role: "system",
+  //       content: prompt,
+  //     },
+  //   ],
+  // });
+
+  // let landingPage: LandingPage | null = null;
+
+  // try {
+  //   landingPage = parseResponse<LandingPage>(landingPageResponse);
+  //   if (!landingPage) {
+  //     throw new Error("Failed to generate landing page");
+  //   }
+  //   const verifyPrompt = buildValidationPrompt(landingPage);
+  //   console.log("About to verify the landing page");
+  //   const verifyLandingPage = await openai.chat.completions.create({
   //     model: selectedModel,
   //     messages: [
   //       {
   //         role: "system",
-  //         content: buildLandingPageGuidePrompt(product),
+  //         content: verifyPrompt,
   //       },
   //     ],
   //   });
+  //   landingPage = parseVerifyResponse(verifyLandingPage, landingPage);
+  // } catch (error) {
+  //   // retry once
+  //   const landingPageResponse = await openai.chat.completions.create({
+  //     model: selectedModel,
+  //     messages: [
+  //       {
+  //         role: "system",
+  //         content: prompt,
+  //       },
+  //     ],
+  //   });
+  //   landingPage = parseResponse<LandingPage>(landingPageResponse);
+  // }
 
-  //   const stylingGuide = parseResponse<string>(styleGuideResponse);
-  //   if (!stylingGuide) {
-  //     throw new Error("Failed to generate styling guide");
-  //   }
-  const now = new Date();
-  const prompt = buildLandingPagePrompt(templateCode, product);
-  console.log(prompt);
-  const landingPageResponse = await openai.chat.completions.create({
-    model: selectedModel,
-    messages: [
-      {
-        role: "system",
-        content: prompt,
-      },
-    ],
-  });
+  // const timeToRun = new Date().getTime() - now.getTime();
+  // const timeToRunMinutes = timeToRun / 60000;
+  // console.log("Time to run: ", timeToRunMinutes + " minutes");
 
-  let landingPage: LandingPage | null = null;
-
-  try {
-    landingPage = parseResponse<LandingPage>(landingPageResponse);
-  } catch (error) {
-    // retry once
-    const landingPageResponse = await openai.chat.completions.create({
-      model: selectedModel,
-      messages: [
-        {
-          role: "system",
-          content: prompt,
-        },
-      ],
-    });
-    landingPage = parseResponse<LandingPage>(landingPageResponse);
-  }
-
-  const timeToRun = new Date().getTime() - now.getTime();
-  const timeToRunMinutes = timeToRun / 60000;
-  console.log("Time to run: ", timeToRunMinutes + " minutes");
-  return landingPage;
+  // return landingPage;
+  return null;
 }
